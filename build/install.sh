@@ -119,6 +119,7 @@ resolve_version() {
         return
     fi
 
+    # Try GitHub API
     local latest
     if latest=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" | grep -m1 '"tag_name"' | cut -d':' -f2 | tr -d '", '); then
         latest="${latest#v}"
@@ -128,7 +129,17 @@ resolve_version() {
         fi
     fi
 
-    log_error "Could not determine latest release version automatically. Set VERSION env var (e.g., VERSION=1.0.1)."
+    # Fallback: scrape tags page (last 50 tags)
+    if latest=$(curl -fsSL "https://github.com/${REPO}/tags" | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1); then
+        latest="${latest#v}"
+        if [[ -n "$latest" ]]; then
+            log_warn "API fallback to tag page, using v${latest}"
+            echo "$latest"
+            return
+        fi
+    fi
+
+    log_error "Could not determine latest release version automatically. Set VERSION env var (e.g., VERSION=1.0.4)."
     exit 1
 }
 
