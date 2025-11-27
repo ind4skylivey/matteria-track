@@ -50,9 +50,6 @@ yay -S materiatrack
 
 # Homebrew (macOS)
 brew install ind4skylivey/tap/materiatrack
-
-# Cargo
-cargo install materiatrack
 ```
 
 ### Basic Usage

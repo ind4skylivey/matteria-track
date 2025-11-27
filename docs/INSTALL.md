@@ -10,7 +10,7 @@ curl -sSL https://raw.githubusercontent.com/ind4skylivey/matteria-track/main/bui
 
 This automatically:
 - Detects your OS and architecture
-- Downloads the appropriate binary
+- Downloads the appropriate binary (Linux glibc, Linux musl, macOS x86_64/arm64) or falls back to local build if none available
 - Installs to `~/.local/bin` (or `/usr/local/bin` with sudo)
 - Sets up shell completions
 - Creates config directory
@@ -39,12 +39,6 @@ brew tap ind4skylivey/tap
 brew install materiatrack
 ```
 
-### Cargo (crates.io)
-
-```bash
-cargo install materiatrack
-```
-
 ## Manual Installation
 
 ### From Source
@@ -69,8 +63,8 @@ sudo cp man/materiatrack.1 /usr/share/man/man1/
 
 ```bash
 # Download latest release
-VERSION="1.0.0"
-ARCH="x86_64-unknown-linux-gnu"
+VERSION="1.0.3"
+ARCH="x86_64-unknown-linux-musl" # or x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin
 wget "https://github.com/ind4skylivey/matteria-track/releases/download/v${VERSION}/materiatrack-${VERSION}-${ARCH}.tar.gz"
 
 # Extract
