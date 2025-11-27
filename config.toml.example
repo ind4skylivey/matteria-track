@@ -1,0 +1,28 @@
+# MatteriaTrack Configuration
+
+[database]
+# Path to the SQLite database file
+path = "~/.config/materiatrack/materiatrack.db"
+
+[ui]
+# Theme options: fire, ice, lightning, earth, wind
+theme = "fire"
+
+[tracking]
+# Option to auto-import git commit messages for task notes (requires git CLI)
+auto_import_git = true
+git_repo_path = "~/projects/myrepo"
+
+[notifications]
+# Enable desktop notifications (Linux/macOS)
+enable = false
+
+[integrations]
+# Integration with obsidian daily notes folder path
+obsidian_path = "~/vault/notes/daily"
+
+[security]
+# Enable database encryption (requires gpg)
+enable_encryption = false
+encryption_key = ""
+

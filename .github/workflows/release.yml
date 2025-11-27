@@ -1,0 +1,180 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - name: Get version from tag
+        id: get_version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: MateriaTrack v${{ steps.get_version.outputs.version }}
+          body: |
+            ## MateriaTrack v${{ steps.get_version.outputs.version }}
+
+            💎 *"Master your time, master your destiny"*
+
+            ### Installation
+
+            **One-liner install:**
+            ```bash
+            curl -sSL https://raw.githubusercontent.com/ind4skylivey/matteria-track/main/build/install.sh | bash
+            ```
+
+            **Arch Linux (AUR):**
+            ```bash
+            yay -S materiatrack
+            ```
+
+            **Homebrew (macOS):**
+            ```bash
+            brew install ind4skylivey/tap/materiatrack
+            ```
+
+            ### Checksums
+            See `SHA256SUMS` asset for verification.
+
+            ### Changelog
+            See [CHANGELOG.md](https://github.com/ind4skylivey/matteria-track/blob/main/CHANGELOG.md)
+          draft: false
+          prerelease: false
+
+  build-release:
+    name: Build Release
+    needs: create-release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: materiatrack
+            asset_name: materiatrack-linux-x86_64
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            artifact_name: materiatrack
+            asset_name: materiatrack-linux-x86_64-musl
+          - os: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            artifact_name: materiatrack
+            asset_name: materiatrack-linux-aarch64
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: materiatrack
+            asset_name: materiatrack-darwin-x86_64
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: materiatrack
+            asset_name: materiatrack-darwin-aarch64
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install cross-compilation tools
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
+
+      - name: Install musl tools
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+        run: sudo apt-get install -y musl-tools
+
+      - name: Build
+        run: |
+          if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
+            export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
+          fi
+          cargo build --release --target ${{ matrix.target }}
+
+      - name: Strip binary
+        run: |
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
+            if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
+              aarch64-linux-gnu-strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} || true
+            else
+              strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} || true
+            fi
+          else
+            strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} || true
+          fi
+
+      - name: Create archive
+        run: |
+          mkdir -p dist
+          cp target/${{ matrix.target }}/release/${{ matrix.artifact_name }} dist/
+          cp README.md LICENSE dist/ 2>/dev/null || true
+          cp -r man dist/ 2>/dev/null || true
+          cp -r completions dist/ 2>/dev/null || true
+          cd dist
+          tar -czvf ../${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz *
+
+      - name: Generate checksum
+        run: |
+          if command -v sha256sum &> /dev/null; then
+            sha256sum ${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz > ${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz.sha256
+          else
+            shasum -a 256 ${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz > ${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz.sha256
+          fi
+
+      - name: Upload release archive
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ./${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz
+          asset_name: ${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload checksum
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ./${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz.sha256
+          asset_name: ${{ matrix.asset_name }}-${{ needs.create-release.outputs.version }}.tar.gz.sha256
+          asset_content_type: text/plain
+
+  publish-crates:
+    name: Publish to crates.io
+    needs: [create-release, build-release]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-action@stable
+
+      - name: Publish to crates.io
+        run: cargo publish --token ${{ secrets.CRATES_TOKEN }}
+        continue-on-error: true

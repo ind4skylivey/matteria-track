@@ -1,0 +1,235 @@
+.TH MATERIATRACK 1 "November 2024" "MateriaTrack 0.1.0" "User Commands"
+.SH NAME
+materiatrack \- Final Fantasy-themed time tracking CLI
+.SH SYNOPSIS
+.B materiatrack
+[\fIOPTIONS\fR] \fICOMMAND\fR [\fIARGS\fR]
+.SH DESCRIPTION
+.B MateriaTrack
+is a mystical, Final Fantasy-themed power user time tracking CLI based on Zeit.
+Track your time with style, earn achievements, and master your productivity destiny.
+.PP
+"Master your time, master your destiny"
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-config " " \fIPATH\fR
+Configuration file path
+.TP
+.BR \-f ", " \-\-format " " \fIFORMAT\fR
+Output format: pretty, json, plain, statusbar (default: pretty)
+.TP
+.BR \-v ", " \-\-verbose
+Verbose output
+.TP
+.BR \-h ", " \-\-help
+Print help information
+.TP
+.BR \-V ", " \-\-version
+Print version information
+.SH COMMANDS
+.SS Tracking
+.TP
+.B track \-p PROJECT \-t TASK
+Start tracking time on a task
+.TP
+.B finish
+Finish the current tracking session
+.TP
+.B status
+Show current tracking status
+.TP
+.B switch
+Quick switch between projects/tasks (fuzzy finder)
+.SS Listing
+.TP
+.B list
+Show recent tracked entries
+.TP
+.B list \-\-since DATE
+Filter entries by date
+.TP
+.B list \-\-total
+Show time totals
+.SS Projects & Tasks
+.TP
+.B project add NAME
+Create new project
+.TP
+.B project list
+Show all projects
+.TP
+.B task add NAME \-p PROJECT
+Create new task in project
+.TP
+.B task list
+Show all tasks
+.SS Statistics
+.TP
+.B stats
+Show time statistics
+.TP
+.B stats \-\-today
+Today's statistics
+.TP
+.B stats \-\-week
+This week's statistics
+.TP
+.B stats \-\-month
+This month's statistics
+.SS Integration
+.TP
+.B statusbar
+Output for DWM/i3/Polybar statusbar
+.TP
+.B dashboard
+Launch interactive TUI dashboard
+.TP
+.B export \-\-export\-format FORMAT
+Export data (json, csv)
+.TP
+.B import \-\-zeit PATH
+Import from Zeit database
+.SS Achievements
+.TP
+.B achievements
+Show achievements and progress
+.SS Configuration
+.TP
+.B config show
+Show current configuration
+.TP
+.B config path
+Show configuration file path
+.TP
+.B config edit
+Edit configuration in $EDITOR
+.TP
+.B completions SHELL
+Generate shell completions (bash, zsh, fish)
+.SH EXAMPLES
+.PP
+Start tracking a task:
+.RS
+.nf
+materiatrack track \-p "MateriaTrack" \-t "Development"
+.fi
+.RE
+.PP
+Finish with time adjustment:
+.RS
+.nf
+materiatrack finish \-\-end="\-0:15"
+.fi
+.RE
+.PP
+Start tracking 15 minutes ago:
+.RS
+.nf
+materiatrack track \-p "Project" \-t "Task" \-\-begin="\-0:15"
+.fi
+.RE
+.PP
+Show today's statistics:
+.RS
+.nf
+materiatrack stats \-\-today
+.fi
+.RE
+.PP
+Export to JSON:
+.RS
+.nf
+materiatrack export \-\-export\-format json \-\-output data.json
+.fi
+.RE
+.PP
+Launch dashboard:
+.RS
+.nf
+materiatrack dashboard
+.fi
+.RE
+.SH THEMES
+MateriaTrack supports 6 elemental Materia themes:
+.TP
+.B Fire
+Burning passion and fierce determination (red/orange)
+.TP
+.B Ice
+Cool precision and crystalline clarity (blue/cyan)
+.TP
+.B Lightning
+Electric energy and swift action (yellow/purple)
+.TP
+.B Earth
+Grounded strength and natural growth (green/brown)
+.TP
+.B Wind
+Ethereal freedom and endless possibility (white/gray)
+.TP
+.B Bahamut
+Ultimate power and legendary mastery (dark purple/gold)
+.PP
+Set theme in config.toml:
+.RS
+.nf
+[ui]
+theme = "bahamut"
+.fi
+.RE
+.SH ACHIEVEMENTS
+Earn achievements as you track your time:
+.TP
+.B Materia Equipped
+Create your first tracked entry
+.TP
+.B Limit Break
+Track 100 hours total
+.TP
+.B Week Warrior
+Track for 7 consecutive days
+.TP
+.B Month Master
+Track for 30 consecutive days
+.PP
+And many more! Run \fBmateriatrack achievements\fR to see all.
+.SH FILES
+.TP
+.I ~/.config/materiatrack/config.toml
+Configuration file
+.TP
+.I ~/.local/share/materiatrack/materiatrack.db
+SQLite database
+.TP
+.I ~/.config/materiatrack/achievements.json
+Achievement progress
+.TP
+.I ~/.config/materiatrack/audit.log
+Audit log (if enabled)
+.SH ENVIRONMENT
+.TP
+.B EDITOR
+Editor for config editing
+.TP
+.B MTRACK_CONFIG
+Alternative config file path
+.SH SECURITY
+MateriaTrack supports:
+.IP \(bu 2
+GPG encryption for database
+.IP \(bu 2
+Append-only audit logging with SHA256 checksums
+.IP \(bu 2
+Secure file permissions (0600)
+.IP \(bu 2
+Data sanitization for exports
+.SH SEE ALSO
+.BR zeit (1),
+.BR watson (1),
+.BR toggl (1)
+.SH BUGS
+Report bugs at: https://github.com/user/materiatrack/issues
+.SH AUTHOR
+Written by the MateriaTrack team.
+.PP
+"Let's mosey." \- Cloud Strife
