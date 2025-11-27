@@ -1,0 +1,39 @@
+# Rust
+target/
+**/*.rs.bk
+*.pdb
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Config
+config.toml
+!config.toml.example
+
+# Logs
+*.log
+audit.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build artifacts
+release/
+*.tar.gz
+*.zip
+checksums.txt
+SHA256SUMS
+
+# Temp
+tmp/
+temp/
