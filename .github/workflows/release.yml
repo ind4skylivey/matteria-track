@@ -40,16 +40,6 @@ jobs:
             curl -sSL https://raw.githubusercontent.com/ind4skylivey/matteria-track/main/build/install.sh | bash
             ```
 
-            **Arch Linux (AUR):**
-            ```bash
-            yay -S materiatrack
-            ```
-
-            **Homebrew (macOS):**
-            ```bash
-            brew install ind4skylivey/tap/materiatrack
-            ```
-
             ### Checksums
             See `SHA256SUMS` asset for verification.
 
