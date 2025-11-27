@@ -133,7 +133,6 @@ resolve_version() {
     if latest=$(curl -fsSL "https://github.com/${REPO}/tags" | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1); then
         latest="${latest#v}"
         if [[ -n "$latest" ]]; then
-            log_warn "API fallback to tag page, using v${latest}"
             echo "$latest"
             return
         fi
