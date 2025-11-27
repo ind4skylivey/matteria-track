@@ -75,6 +75,15 @@ sudo cp materiatrack /usr/local/bin/
 sudo cp man/materiatrack.1 /usr/share/man/man1/
 ```
 
+Available artifacts (v1.0.3):
+- materiatrack-1.0.3-x86_64-unknown-linux-gnu.tar.gz (glibc)
+- materiatrack-1.0.3-x86_64-unknown-linux-musl.tar.gz (static/musl)
+- materiatrack-1.0.3-x86_64-apple-darwin.tar.gz (macOS Intel)
+- materiatrack-1.0.3-aarch64-apple-darwin.tar.gz (macOS Apple Silicon)
+- SHA256SUMS
+
+All at: https://github.com/ind4skylivey/matteria-track/releases/tag/v1.0.3
+
 ## Platform-Specific Notes
 
 ### Linux
