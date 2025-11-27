@@ -186,6 +186,7 @@ mtrack achievements
 
 ## Documentation
 
+- [📖 User Guide](docs/USER_GUIDE.md)
 - [Installation Guide](docs/INSTALL.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Integrations](docs/INTEGRATIONS.md)
@@ -193,40 +194,46 @@ mtrack achievements
 - [Achievements](docs/ACHIEVEMENTS.md)
 - [Contributing](docs/CONTRIBUTING.md)
 
-## Commands
+## Command Reference
 
-| Command | Description |
-|---------|-------------|
-| `track` | Start tracking |
-| `finish` | Stop tracking |
-| `status` | Current status |
-| `list` | Show entries |
-| `stats` | Statistics |
-| `project` | Manage projects |
-| `task` | Manage tasks |
-| `export` | Export data |
-| `import` | Import data |
-| `achievements` | View achievements |
-| `dashboard` | Interactive TUI |
-| `statusbar` | Statusbar output |
+| Command | Alias | Description | Key Options |
+|---------|-------|-------------|-------------|
+| `track` | `t` | Start tracking | `-p`, `-t`, `--begin`, `-n` |
+| `finish` | `f` | Stop tracking | `-n`, `--end` |
+| `status` | `s` | Show current status | |
+| `list` | `l` | List entries | `--since`, `--limit`, `--total` |
+| `stats` | | Statistics | `--today`, `--week`, `--by-project` |
+| `project` | | Manage projects | `add`, `list`, `update`, `remove` |
+| `task` | | Manage tasks | `add`, `list`, `update`, `remove` |
+| `dashboard` | `ui` | TUI Dashboard | |
+| `statusbar` | | Statusbar output | `--format` |
+| `config` | | Manage config | `edit`, `show`, `set` |
+| `import` | | Import data | `--zeit`, `--json` |
+| `export` | | Export data | `--format`, `--output` |
 
-## Configuration
+## Configuration Reference
+
+Configuration file is located at `~/.config/materiatrack/config.toml`.
 
 ```toml
-# ~/.config/materiatrack/config.toml
-
 [ui]
-theme = "fire"
+theme = "fire"              # Themes: fire, ice, lightning, earth, wind, bahamut
 
 [tracking]
-auto_import_git = true
+auto_import_git = true      # Use commit timestamps if inside a git repo
+git_repo_path = ""          # Override git repo path
 
 [notifications]
-enable = true
-reminder_interval = 30
+enable = true               # Desktop notifications
+reminder_interval = 30      # Minutes between "still tracking" reminders
+
+[integrations]
+obsidian_path = "~/Vault"   # Path to Obsidian vault for daily note sync
 
 [security]
-enable_encryption = false
+enable_encryption = false   # Encrypt database with GPG
+encryption_key = ""         # GPG Key ID (required if enabled)
+enable_audit_log = true     # Log all changes to validation_log.md
 ```
 
 ## Building from Source

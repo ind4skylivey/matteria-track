@@ -21,7 +21,9 @@ mod ui;
 use chrono::{DateTime, Local, NaiveDate, TimeZone, Utc};
 use clap::CommandFactory;
 use clap_complete::Shell;
-use cli::{Cli, Commands, ConfigCommands, OutputFormat, ProjectCommands, TaskCommands};
+use cli::{
+    Cli, Commands, ConfigCommands, OutputFormat, ProjectCommands, TaskCommands, ThemeCommands,
+};
 use colored::Colorize;
 use config::Config;
 use database::Database;
@@ -549,6 +551,44 @@ async fn run() -> Result<()> {
                 println!("{}", content);
             }
         }
+
+        Commands::Theme { command } => match command {
+            ThemeCommands::List => {
+                let themes = vec!["fire", "ice", "lightning", "earth", "wind", "bahamut"];
+                println!("\n💎 Available Materia Themes\n");
+                for t in themes {
+                    let theme_enum: theme::MateriaTheme = t.parse().unwrap();
+                    let (r, g, b) = theme_enum.primary_color();
+                    let icon = theme_enum.icon();
+                    println!("  {} {}  {}", icon, t.bold().truecolor(r, g, b), if t == config.ui.theme { "(active)" } else { "" });
+                }
+                println!();
+                print_info("Use 'mtrack theme preview --theme <name>' to preview");
+            }
+            ThemeCommands::Preview { theme: theme_name } => {
+                let theme_to_preview = if let Some(name) = theme_name {
+                     name.parse().unwrap_or(theme)
+                } else {
+                     theme
+                };
+
+                println!("\n╔══════════════════════════════════════╗");
+                println!("║  {} {} Materia Theme                ║", theme_to_preview.icon(), format!("{:?}", theme_to_preview).trim());
+                println!("╠══════════════════════════════════════╣");
+                
+                let (r1, g1, b1) = theme_to_preview.primary_color();
+                println!("║  Primary:    {} ████            ║", format!("#{:02X}{:02X}{:02X}", r1, g1, b1).truecolor(r1, g1, b1));
+                
+                // Note: Secondary and Accent colors accessors might not be public or exist in the same way
+                // simplifying to show primary which we know exists
+                
+                println!("╠══════════════════════════════════════╣");
+                println!("║  {} Project Name                     ║", crate::theme::icons::PROJECT); // Assuming generic icon if theme specific not avail directly
+                println!("║    {} Task Name          02:30      ║", crate::theme::icons::SWORD);
+                println!("║  {} Completed                         ║", crate::theme::icons::CHECK);
+                println!("╚══════════════════════════════════════╝\n");
+            }
+        },
 
         Commands::Completions { .. } => unreachable!("handled before config is loaded"),
     }

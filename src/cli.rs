@@ -235,6 +235,25 @@ pub enum Commands {
         #[arg(long)]
         since: Option<String>,
     },
+
+    /// 🎨 Manage UI themes
+    Theme {
+        #[command(subcommand)]
+        command: ThemeCommands,
+    },
+}
+
+#[derive(Subcommand, Debug)]
+pub enum ThemeCommands {
+    /// List available themes
+    List,
+
+    /// Preview a specific theme
+    Preview {
+        /// Theme name to preview (optional, defaults to current)
+        #[arg(short, long)]
+        theme: Option<String>,
+    },
 }
 
 #[derive(Subcommand, Debug)]
