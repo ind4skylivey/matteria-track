@@ -187,11 +187,10 @@ impl AuditLog {
         let reader = BufReader::new(file);
 
         let mut last_line = None;
-        for line in reader.lines() {
-            if let Ok(l) = line {
-                if !l.trim().is_empty() {
-                    last_line = Some(l);
-                }
+        #[allow(clippy::lines_filter_map_ok)]
+        for l in reader.lines().flatten() {
+            if !l.trim().is_empty() {
+                last_line = Some(l);
             }
         }
 
@@ -240,6 +239,7 @@ impl AuditLog {
 
         let file = File::open(&self.path)?;
         let reader = BufReader::new(file);
+        #[allow(clippy::lines_filter_map_ok)]
         Ok(reader.lines().filter_map(|l| l.ok()).count())
     }
 

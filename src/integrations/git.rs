@@ -114,10 +114,7 @@ impl GitIntegration {
         let mut output = String::from("\n--- Git Commits ---\n");
 
         for commit in commits {
-            output.push_str(&format!(
-                "• {} {}\n",
-                commit.short_hash, commit.message
-            ));
+            output.push_str(&format!("• {} {}\n", commit.short_hash, commit.message));
         }
 
         output
@@ -242,10 +239,7 @@ fn truncate(s: &str, max_len: usize) -> String {
     }
 }
 
-pub fn auto_import_commits(
-    entry: &mut Entry,
-    config: &Config,
-) -> Result<usize> {
+pub fn auto_import_commits(entry: &mut Entry, config: &Config) -> Result<usize> {
     if !config.tracking.auto_import_git {
         return Ok(0);
     }

@@ -38,9 +38,9 @@ impl MateriaTheme {
 
     const fn fire_palette() -> ColorPalette {
         ColorPalette {
-            primary: (255, 69, 0),     // #FF4500 OrangeRed
-            secondary: (255, 99, 71),  // #FF6347 Tomato
-            accent: (255, 165, 0),     // #FFA500 Orange
+            primary: (255, 69, 0),    // #FF4500 OrangeRed
+            secondary: (255, 99, 71), // #FF6347 Tomato
+            accent: (255, 165, 0),    // #FFA500 Orange
             text: (255, 255, 255),
             muted: (180, 100, 80),
             success: (100, 255, 100),
@@ -64,9 +64,9 @@ impl MateriaTheme {
 
     const fn lightning_palette() -> ColorPalette {
         ColorPalette {
-            primary: (255, 215, 0),    // #FFD700 Gold
+            primary: (255, 215, 0),     // #FFD700 Gold
             secondary: (147, 112, 219), // #9370DB MediumPurple
-            accent: (186, 85, 211),    // #BA55D3 MediumOrchid
+            accent: (186, 85, 211),     // #BA55D3 MediumOrchid
             text: (255, 255, 255),
             muted: (180, 160, 100),
             success: (200, 255, 100),
@@ -77,9 +77,9 @@ impl MateriaTheme {
 
     const fn earth_palette() -> ColorPalette {
         ColorPalette {
-            primary: (34, 139, 34),    // #228B22 ForestGreen
-            secondary: (139, 69, 19),  // #8B4513 SaddleBrown
-            accent: (107, 142, 35),    // #6B8E23 OliveDrab
+            primary: (34, 139, 34),   // #228B22 ForestGreen
+            secondary: (139, 69, 19), // #8B4513 SaddleBrown
+            accent: (107, 142, 35),   // #6B8E23 OliveDrab
             text: (255, 255, 255),
             muted: (100, 120, 80),
             success: (150, 255, 100),
@@ -90,9 +90,9 @@ impl MateriaTheme {
 
     const fn wind_palette() -> ColorPalette {
         ColorPalette {
-            primary: (240, 248, 255),  // #F0F8FF AliceBlue
+            primary: (240, 248, 255),   // #F0F8FF AliceBlue
             secondary: (211, 211, 211), // #D3D3D3 LightGray
-            accent: (112, 128, 144),   // #708090 SlateGray
+            accent: (112, 128, 144),    // #708090 SlateGray
             text: (50, 50, 50),
             muted: (150, 150, 150),
             success: (100, 200, 100),
@@ -103,9 +103,9 @@ impl MateriaTheme {
 
     const fn bahamut_palette() -> ColorPalette {
         ColorPalette {
-            primary: (46, 8, 84),      // #2E0854 Dark Purple
-            secondary: (255, 215, 0),  // #FFD700 Gold
-            accent: (75, 0, 130),      // #4B0082 Indigo
+            primary: (46, 8, 84),     // #2E0854 Dark Purple
+            secondary: (255, 215, 0), // #FFD700 Gold
+            accent: (75, 0, 130),     // #4B0082 Indigo
             text: (255, 255, 255),
             muted: (100, 80, 120),
             success: (150, 200, 255),

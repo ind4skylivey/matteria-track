@@ -106,10 +106,7 @@ pub fn run_dashboard(db: Database, theme: MateriaTheme) -> Result<()> {
     Ok(())
 }
 
-fn run_app<B: ratatui::backend::Backend>(
-    terminal: &mut Terminal<B>,
-    app: &mut App,
-) -> Result<()> {
+fn run_app<B: ratatui::backend::Backend>(terminal: &mut Terminal<B>, app: &mut App) -> Result<()> {
     loop {
         terminal.draw(|f| ui(f, app))?;
 
@@ -193,7 +190,13 @@ fn draw_header<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Col
     f.render_widget(tabs, area);
 }
 
-fn draw_status<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color, secondary: Color) {
+fn draw_status<B: Backend>(
+    f: &mut Frame<B>,
+    app: &App,
+    area: Rect,
+    primary: Color,
+    secondary: Color,
+) {
     let block = Block::default()
         .borders(Borders::ALL)
         .title(" ⚔️ Active Tracking ");
@@ -217,7 +220,10 @@ fn draw_status<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Col
         let text = vec![
             Line::from(vec![
                 Span::styled("Project: ", Style::default().fg(Color::Gray)),
-                Span::styled(&project.name, Style::default().fg(primary).add_modifier(Modifier::BOLD)),
+                Span::styled(
+                    &project.name,
+                    Style::default().fg(primary).add_modifier(Modifier::BOLD),
+                ),
                 Span::raw("  →  "),
                 Span::styled("Task: ", Style::default().fg(Color::Gray)),
                 Span::styled(&task.name, Style::default().fg(secondary)),
@@ -315,8 +321,16 @@ fn draw_projects<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: C
         .map(|p| {
             let color_indicator = p.color.as_ref().map_or("", |_| "●");
             ListItem::new(Line::from(vec![
-                Span::styled(format!("{} ", color_indicator), Style::default().fg(primary)),
-                Span::styled(&p.name, Style::default().fg(Color::White).add_modifier(Modifier::BOLD)),
+                Span::styled(
+                    format!("{} ", color_indicator),
+                    Style::default().fg(primary),
+                ),
+                Span::styled(
+                    &p.name,
+                    Style::default()
+                        .fg(Color::White)
+                        .add_modifier(Modifier::BOLD),
+                ),
             ]))
         })
         .collect();
@@ -334,23 +348,18 @@ fn draw_projects<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: C
 
 fn draw_stats<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color) {
     let text = vec![
-        Line::from(vec![
-            Span::styled("📊 Statistics Panel", Style::default().fg(primary).add_modifier(Modifier::BOLD)),
-        ]),
+        Line::from(vec![Span::styled(
+            "📊 Statistics Panel",
+            Style::default().fg(primary).add_modifier(Modifier::BOLD),
+        )]),
         Line::from(""),
         Line::from(vec![
             Span::raw("Total Entries: "),
-            Span::styled(
-                app.entries.len().to_string(),
-                Style::default().fg(primary),
-            ),
+            Span::styled(app.entries.len().to_string(), Style::default().fg(primary)),
         ]),
         Line::from(vec![
             Span::raw("Total Projects: "),
-            Span::styled(
-                app.projects.len().to_string(),
-                Style::default().fg(primary),
-            ),
+            Span::styled(app.projects.len().to_string(), Style::default().fg(primary)),
         ]),
         Line::from(""),
         Line::from(vec![Span::styled(
@@ -370,9 +379,10 @@ fn draw_stats<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Colo
 
 fn draw_help<B: Backend>(f: &mut Frame<B>, _app: &App, area: Rect, primary: Color) {
     let help_text = vec![
-        Line::from(vec![
-            Span::styled("⌨️  Keyboard Shortcuts", Style::default().fg(primary).add_modifier(Modifier::BOLD)),
-        ]),
+        Line::from(vec![Span::styled(
+            "⌨️  Keyboard Shortcuts",
+            Style::default().fg(primary).add_modifier(Modifier::BOLD),
+        )]),
         Line::from(""),
         Line::from(vec![
             Span::styled("Tab/→  ", Style::default().fg(primary)),
@@ -401,15 +411,14 @@ fn draw_help<B: Backend>(f: &mut Frame<B>, _app: &App, area: Rect, primary: Colo
         Line::from(""),
         Line::from(vec![Span::styled(
             "💎 \"Master your time, master your destiny\"",
-            Style::default().fg(Color::DarkGray).add_modifier(Modifier::ITALIC),
+            Style::default()
+                .fg(Color::DarkGray)
+                .add_modifier(Modifier::ITALIC),
         )]),
     ];
 
-    let paragraph = Paragraph::new(help_text).block(
-        Block::default()
-            .borders(Borders::ALL)
-            .title(" ❓ Help "),
-    );
+    let paragraph =
+        Paragraph::new(help_text).block(Block::default().borders(Borders::ALL).title(" ❓ Help "));
 
     f.render_widget(paragraph, area);
 }

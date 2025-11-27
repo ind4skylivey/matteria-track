@@ -102,12 +102,7 @@ impl GpgEncryption {
     }
 
     pub fn encrypt_file<P: AsRef<Path>>(&self, input: P, output: P) -> Result<()> {
-        let mut args = vec![
-            "--encrypt",
-            "--recipient",
-            &self.key_id,
-            "--output",
-        ];
+        let mut args = vec!["--encrypt", "--recipient", &self.key_id, "--output"];
 
         let output_str = output.as_ref().to_string_lossy().to_string();
         args.push(&output_str);
@@ -302,7 +297,10 @@ pub fn list_secret_keys() -> Result<Vec<KeyInfo>> {
                     key_id: parts.get(4).unwrap_or(&"").to_string(),
                     user_id: String::new(),
                     creation_date: parts.get(5).unwrap_or(&"").to_string(),
-                    expiration_date: parts.get(6).filter(|s| !s.is_empty()).map(|s| s.to_string()),
+                    expiration_date: parts
+                        .get(6)
+                        .filter(|s| !s.is_empty())
+                        .map(|s| s.to_string()),
                     can_encrypt: parts
                         .get(11)
                         .map(|c| c.contains('e') || c.contains('E'))
@@ -357,12 +355,7 @@ impl SecureStorage for PasswordEncryption {
         })?;
 
         let mut child = Command::new(&gpg)
-            .args([
-                "--symmetric",
-                "--cipher-algo",
-                &self.cipher,
-                "--armor",
-            ])
+            .args(["--symmetric", "--cipher-algo", &self.cipher, "--armor"])
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())

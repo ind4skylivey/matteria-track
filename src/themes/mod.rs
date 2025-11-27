@@ -21,11 +21,7 @@ pub struct ColorPalette {
 }
 
 impl ColorPalette {
-    pub const fn new(
-        primary: (u8, u8, u8),
-        secondary: (u8, u8, u8),
-        accent: (u8, u8, u8),
-    ) -> Self {
+    pub const fn new(primary: (u8, u8, u8), secondary: (u8, u8, u8), accent: (u8, u8, u8)) -> Self {
         Self {
             primary,
             secondary,
@@ -180,7 +176,7 @@ pub trait Theme: Send + Sync {
             i.materia, i.project, i.task, i.time, i.check, i.star, i.trophy, i.git
         ));
 
-        output.push_str(&"\n");
+        output.push('\n');
         output.push_str(&"━".repeat(50));
         output.push('\n');
 
@@ -229,13 +225,13 @@ impl ThemeManager {
             let p = theme.palette();
             output.push_str(&format!(
                 "   Colors: {} {} {}\n",
-                format!("██").truecolor(p.primary.0, p.primary.1, p.primary.2),
-                format!("██").truecolor(p.secondary.0, p.secondary.1, p.secondary.2),
-                format!("██").truecolor(p.accent.0, p.accent.1, p.accent.2),
+                "██".truecolor(p.primary.0, p.primary.1, p.primary.2),
+                "██".truecolor(p.secondary.0, p.secondary.1, p.secondary.2),
+                "██".truecolor(p.accent.0, p.accent.1, p.accent.2),
             ));
         }
 
-        output.push_str(&"\n");
+        output.push('\n');
         output.push_str(&"═".repeat(50));
         output.push('\n');
 

@@ -33,18 +33,55 @@ pub trait AuditLogger {
 
 #[derive(Debug, Clone)]
 pub enum AuditAction {
-    EntryCreated { entry_id: i64, project: String, task: String },
-    EntryUpdated { entry_id: i64, changes: Vec<String> },
-    EntryDeleted { entry_id: i64 },
-    TrackingStarted { entry_id: i64, project: String, task: String },
-    TrackingFinished { entry_id: i64, duration_secs: i64 },
-    ProjectCreated { project_id: i64, name: String },
-    ProjectDeleted { project_id: i64, name: String },
-    TaskCreated { task_id: i64, name: String, project_id: i64 },
-    TaskDeleted { task_id: i64, name: String },
-    DataExported { format: String, entry_count: usize },
-    DataImported { source: String, entry_count: usize },
-    ConfigChanged { key: String },
+    EntryCreated {
+        entry_id: i64,
+        project: String,
+        task: String,
+    },
+    EntryUpdated {
+        entry_id: i64,
+        changes: Vec<String>,
+    },
+    EntryDeleted {
+        entry_id: i64,
+    },
+    TrackingStarted {
+        entry_id: i64,
+        project: String,
+        task: String,
+    },
+    TrackingFinished {
+        entry_id: i64,
+        duration_secs: i64,
+    },
+    ProjectCreated {
+        project_id: i64,
+        name: String,
+    },
+    ProjectDeleted {
+        project_id: i64,
+        name: String,
+    },
+    TaskCreated {
+        task_id: i64,
+        name: String,
+        project_id: i64,
+    },
+    TaskDeleted {
+        task_id: i64,
+        name: String,
+    },
+    DataExported {
+        format: String,
+        entry_count: usize,
+    },
+    DataImported {
+        source: String,
+        entry_count: usize,
+    },
+    ConfigChanged {
+        key: String,
+    },
     EncryptionEnabled,
     EncryptionDisabled,
 }
@@ -79,7 +116,9 @@ pub struct SecurityManager {
 impl SecurityManager {
     pub fn new(config: Config) -> Result<Self> {
         let encryption = if config.security.enable_encryption {
-            Some(encryption::GpgEncryption::new(&config.security.encryption_key)?)
+            Some(encryption::GpgEncryption::new(
+                &config.security.encryption_key,
+            )?)
         } else {
             None
         };

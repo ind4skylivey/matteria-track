@@ -92,7 +92,7 @@ impl ExportFormat {
         }
     }
 
-    pub fn from_str(s: &str) -> Self {
+    pub fn parse(s: &str) -> Self {
         match s.to_lowercase().as_str() {
             "csv" => Self::Csv,
             "md" | "markdown" => Self::Markdown,
@@ -189,21 +189,20 @@ impl SecureExporter {
 
     fn format_full(&self, entries: &[&EntryWithDetails]) -> Result<String> {
         match self.options.format {
-            ExportFormat::Json => {
-                serde_json::to_string_pretty(entries).map_err(|e| crate::error::Error::Parse(e.to_string()))
-            }
+            ExportFormat::Json => serde_json::to_string_pretty(entries)
+                .map_err(|e| crate::error::Error::Parse(e.to_string())),
             ExportFormat::Csv => self.format_csv(entries, false),
             ExportFormat::Markdown => self.format_markdown(entries, false),
         }
     }
 
     fn format_sanitized(&self, entries: &[&EntryWithDetails]) -> Result<String> {
-        let sanitized: Vec<SanitizedEntry> = entries.iter().map(|e| SanitizedEntry::from(*e)).collect();
+        let sanitized: Vec<SanitizedEntry> =
+            entries.iter().map(|e| SanitizedEntry::from(*e)).collect();
 
         match self.options.format {
-            ExportFormat::Json => {
-                serde_json::to_string_pretty(&sanitized).map_err(|e| crate::error::Error::Parse(e.to_string()))
-            }
+            ExportFormat::Json => serde_json::to_string_pretty(&sanitized)
+                .map_err(|e| crate::error::Error::Parse(e.to_string())),
             ExportFormat::Csv => self.format_csv(entries, true),
             ExportFormat::Markdown => self.format_markdown(entries, true),
         }
@@ -252,7 +251,10 @@ impl SecureExporter {
 
     fn format_markdown(&self, entries: &[&EntryWithDetails], sanitize: bool) -> Result<String> {
         let mut md = String::from("# MateriaTrack Export\n\n");
-        md.push_str(&format!("Generated: {}\n\n", Utc::now().format("%Y-%m-%d %H:%M:%S UTC")));
+        md.push_str(&format!(
+            "Generated: {}\n\n",
+            Utc::now().format("%Y-%m-%d %H:%M:%S UTC")
+        ));
 
         if sanitize {
             md.push_str("*Note: This export has been sanitized (notes and commits removed)*\n\n");
@@ -307,10 +309,8 @@ impl SecureExporter {
         let gpg = GpgEncryption::new(recipient)?;
         let encrypted = gpg.encrypt(data)?;
 
-        let encrypted_path = output_path.with_extension(format!(
-            "{}.gpg",
-            self.options.format.extension()
-        ));
+        let encrypted_path =
+            output_path.with_extension(format!("{}.gpg", self.options.format.extension()));
 
         fs::write(&encrypted_path, encrypted)?;
 
@@ -324,15 +324,17 @@ impl SecureExporter {
 
         let filename = format!("export.{}", self.options.format.extension());
 
-        let options = SimpleFileOptions::default()
-            .compression_method(zip::CompressionMethod::Deflated);
+        let options =
+            SimpleFileOptions::default().compression_method(zip::CompressionMethod::Deflated);
 
-        zip.start_file(&filename, options)
-            .map_err(|e| crate::error::Error::Io(std::io::Error::new(std::io::ErrorKind::Other, e)))?;
+        zip.start_file(&filename, options).map_err(|e| {
+            crate::error::Error::Io(std::io::Error::new(std::io::ErrorKind::Other, e))
+        })?;
 
         zip.write_all(data)?;
-        zip.finish()
-            .map_err(|e| crate::error::Error::Io(std::io::Error::new(std::io::ErrorKind::Other, e)))?;
+        zip.finish().map_err(|e| {
+            crate::error::Error::Io(std::io::Error::new(std::io::ErrorKind::Other, e))
+        })?;
 
         Ok(archive_path)
     }
@@ -358,11 +360,7 @@ impl ExportResult {
             parts.push("sanitized".into());
         }
 
-        format!(
-            "{} to {}",
-            parts.join(", "),
-            self.path.display()
-        )
+        format!("{} to {}", parts.join(", "), self.path.display())
     }
 }
 
@@ -374,9 +372,7 @@ pub fn verify_gpg_recipient(recipient: &str) -> Result<bool> {
     let output = std::process::Command::new(&gpg)
         .args(["--list-keys", recipient])
         .output()
-        .map_err(|e| {
-            crate::error::Error::Config(ConfigError::EncryptionError(e.to_string()))
-        })?;
+        .map_err(|e| crate::error::Error::Config(ConfigError::EncryptionError(e.to_string())))?;
 
     Ok(output.status.success())
 }
@@ -421,9 +417,7 @@ pub fn decrypt_import<P: AsRef<Path>>(encrypted_path: P) -> Result<Vec<u8>> {
             }
             child.wait_with_output()
         })
-        .map_err(|e| {
-            crate::error::Error::Config(ConfigError::EncryptionError(e.to_string()))
-        })?;
+        .map_err(|e| crate::error::Error::Config(ConfigError::EncryptionError(e.to_string())))?;
 
     if !output.status.success() {
         let stderr = String::from_utf8_lossy(&output.stderr);

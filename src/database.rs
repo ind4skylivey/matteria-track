@@ -21,8 +21,8 @@ impl Database {
             std::fs::create_dir_all(parent)?;
         }
 
-        let conn = Connection::open(path)
-            .map_err(|e| DatabaseError::ConnectionFailed(e.to_string()))?;
+        let conn =
+            Connection::open(path).map_err(|e| DatabaseError::ConnectionFailed(e.to_string()))?;
 
         conn.execute_batch("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;")
             .map_err(|e| DatabaseError::ConnectionFailed(e.to_string()))?;

@@ -46,9 +46,10 @@ impl ZeitImporter {
         let zeit_path = self.get_db_path()?;
 
         if !zeit_path.exists() {
-            return Err(crate::error::Error::Config(ConfigError::NotFound(
-                format!("Zeit database not found: {}", zeit_path.display()),
-            )));
+            return Err(crate::error::Error::Config(ConfigError::NotFound(format!(
+                "Zeit database not found: {}",
+                zeit_path.display()
+            ))));
         }
 
         let zeit_conn = Connection::open(&zeit_path)?;
@@ -69,14 +70,12 @@ impl ZeitImporter {
         let zeit_entries = self.read_zeit_entries(&zeit_conn)?;
 
         for ze in zeit_entries {
-            let project = project_map
-                .entry(ze.project.clone())
-                .or_insert_with(|| {
-                    let mut p = Project::new(&ze.project);
-                    let _ = target_db.create_project(&mut p);
-                    result.projects_imported += 1;
-                    p
-                });
+            let project = project_map.entry(ze.project.clone()).or_insert_with(|| {
+                let mut p = Project::new(&ze.project);
+                let _ = target_db.create_project(&mut p);
+                result.projects_imported += 1;
+                p
+            });
 
             let task_key = (project.id, ze.task.clone());
             let task = task_map.entry(task_key.clone()).or_insert_with(|| {
@@ -109,11 +108,7 @@ impl ZeitImporter {
         )?;
 
         let projects = stmt
-            .query_map([], |row| {
-                Ok(ZeitProject {
-                    name: row.get(0)?,
-                })
-            })?
+            .query_map([], |row| Ok(ZeitProject { name: row.get(0)? }))?
             .filter_map(|r| r.ok())
             .collect();
 
@@ -121,9 +116,7 @@ impl ZeitImporter {
     }
 
     fn read_zeit_entries(&self, conn: &Connection) -> Result<Vec<ZeitEntry>> {
-        let has_task_column = conn
-            .prepare("SELECT task FROM entries LIMIT 1")
-            .is_ok();
+        let has_task_column = conn.prepare("SELECT task FROM entries LIMIT 1").is_ok();
 
         let query = if has_task_column {
             "SELECT project, task, start, finish, note FROM entries 
@@ -140,7 +133,9 @@ impl ZeitImporter {
         let entries = stmt
             .query_map([], |row| {
                 let project: String = row.get(0)?;
-                let task: String = row.get::<_, Option<String>>(1)?.unwrap_or_else(|| "default".to_string());
+                let task: String = row
+                    .get::<_, Option<String>>(1)?
+                    .unwrap_or_else(|| "default".to_string());
                 let start_str: String = row.get(2)?;
                 let end_str: Option<String> = row.get(3)?;
                 let notes: Option<String> = row.get(4)?;
@@ -166,9 +161,10 @@ impl ZeitImporter {
         let zeit_path = self.get_db_path()?;
 
         if !zeit_path.exists() {
-            return Err(crate::error::Error::Config(ConfigError::NotFound(
-                format!("Zeit database not found: {}", zeit_path.display()),
-            )));
+            return Err(crate::error::Error::Config(ConfigError::NotFound(format!(
+                "Zeit database not found: {}",
+                zeit_path.display()
+            ))));
         }
 
         let conn = Connection::open(&zeit_path)?;
@@ -220,15 +216,19 @@ impl Integration for ZeitImporter {
     }
 
     fn is_enabled(&self, _config: &Config) -> bool {
-        self.db_path.is_some() || Self::default_zeit_path().map(|p| p.exists()).unwrap_or(false)
+        self.db_path.is_some()
+            || Self::default_zeit_path()
+                .map(|p| p.exists())
+                .unwrap_or(false)
     }
 
     fn validate_config(&self, _config: &Config) -> Result<()> {
         let path = self.get_db_path()?;
         if !path.exists() {
-            return Err(crate::error::Error::Config(ConfigError::NotFound(
-                format!("Zeit database not found: {}", path.display()),
-            )));
+            return Err(crate::error::Error::Config(ConfigError::NotFound(format!(
+                "Zeit database not found: {}",
+                path.display()
+            ))));
         }
         Ok(())
     }
@@ -301,11 +301,9 @@ pub struct ImportPreview {
 impl ImportPreview {
     pub fn display(&self) -> String {
         let date_range = match (&self.oldest_entry, &self.newest_entry) {
-            (Some(old), Some(new)) => format!(
-                "{} to {}",
-                old.format("%Y-%m-%d"),
-                new.format("%Y-%m-%d")
-            ),
+            (Some(old), Some(new)) => {
+                format!("{} to {}", old.format("%Y-%m-%d"), new.format("%Y-%m-%d"))
+            }
             _ => "Unknown".to_string(),
         };
 

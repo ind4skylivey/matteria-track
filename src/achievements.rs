@@ -321,6 +321,7 @@ impl AchievementProgress {
     }
 }
 
+#[derive(Default)]
 pub struct AchievementChecker {
     progress: AchievementProgress,
 }
@@ -370,7 +371,8 @@ impl AchievementChecker {
             }
         }
 
-        if !self.progress.is_unlocked("soldier_first_class") && self.progress.total_hours >= 1000.0 {
+        if !self.progress.is_unlocked("soldier_first_class") && self.progress.total_hours >= 1000.0
+        {
             if let Some(a) = self.progress.unlock("soldier_first_class") {
                 newly_unlocked.push(a);
             }
@@ -418,10 +420,17 @@ impl AchievementChecker {
             .progress
             .unlocked
             .keys()
-            .filter(|id| ACHIEVEMENTS.iter().find(|a| a.id == *id).map(|a| !a.secret).unwrap_or(false))
+            .filter(|id| {
+                ACHIEVEMENTS
+                    .iter()
+                    .find(|a| a.id == *id)
+                    .map(|a| !a.secret)
+                    .unwrap_or(false)
+            })
             .count();
 
-        if !self.progress.is_unlocked("knights_of_round") && unlocked_non_secret >= non_secret_count {
+        if !self.progress.is_unlocked("knights_of_round") && unlocked_non_secret >= non_secret_count
+        {
             if let Some(a) = self.progress.unlock("knights_of_round") {
                 newly_unlocked.push(a);
             }
@@ -440,10 +449,7 @@ impl AchievementChecker {
         self.progress.total_projects = projects.len() as u64;
         self.progress.total_tasks = tasks.len() as u64;
 
-        let total_seconds: i64 = entries
-            .iter()
-            .map(|e| e.duration().num_seconds())
-            .sum();
+        let total_seconds: i64 = entries.iter().map(|e| e.duration().num_seconds()).sum();
         self.progress.total_hours = total_seconds as f64 / 3600.0;
 
         // Calculate consecutive days
@@ -525,14 +531,6 @@ impl AchievementChecker {
     }
 }
 
-impl Default for AchievementChecker {
-    fn default() -> Self {
-        Self {
-            progress: AchievementProgress::default(),
-        }
-    }
-}
-
 pub fn format_achievement_unlocked(achievement: &Achievement) -> String {
     format!(
         "\n🎉 Achievement Unlocked! 🎉\n\n{} {} - {}\n{}\n+{} points\n",
@@ -567,7 +565,7 @@ pub fn format_achievements_list(progress: &AchievementProgress) -> String {
             .collect();
 
         if !achievements.is_empty() {
-            output.push_str(&format!("\n{} {}\n", category.icon(), format!("{:?}", category)));
+            output.push_str(&format!("\n{} {:?}\n", category.icon(), category));
             output.push_str(&"─".repeat(40));
             output.push('\n');
 
@@ -592,7 +590,10 @@ pub fn format_achievements_list(progress: &AchievementProgress) -> String {
         .collect();
 
     if !unlocked_secrets.is_empty() {
-        output.push_str(&format!("\n{} Secrets Discovered\n", AchievementCategory::Secret.icon()));
+        output.push_str(&format!(
+            "\n{} Secrets Discovered\n",
+            AchievementCategory::Secret.icon()
+        ));
         output.push_str(&"─".repeat(40));
         output.push('\n');
 
@@ -608,7 +609,7 @@ pub fn format_achievements_list(progress: &AchievementProgress) -> String {
         unlocked_secret_count, secret_count
     ));
 
-    output.push_str(&"\n");
+    output.push('\n');
     output.push_str(&"═".repeat(50));
     output.push('\n');
 

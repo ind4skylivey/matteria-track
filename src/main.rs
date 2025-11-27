@@ -491,19 +491,18 @@ async fn run() -> Result<()> {
             } else if let Some(path) = json {
                 let result = integrations::zeit::import_from_json(&path, engine.db())?;
                 print_success(&result.summary());
-            } else {
-                if let Some(default_path) = integrations::zeit::ZeitImporter::default_zeit_path() {
-                    if default_path.exists() {
-                        let importer = integrations::zeit::ZeitImporter::new();
-                        let preview = importer.preview()?;
-                        print_info(&format!("Found Zeit database:\n{}", preview.display()));
-                        print_info("Use --zeit flag to import");
-                    } else {
-                        print_info("No Zeit database found. Use --zeit <path> or --json <path>");
-                    }
+            } else if let Some(default_path) = integrations::zeit::ZeitImporter::default_zeit_path()
+            {
+                if default_path.exists() {
+                    let importer = integrations::zeit::ZeitImporter::new();
+                    let preview = importer.preview()?;
+                    print_info(&format!("Found Zeit database:\n{}", preview.display()));
+                    print_info("Use --zeit flag to import");
                 } else {
-                    print_info("Specify --zeit <path> or --json <path> to import");
+                    print_info("No Zeit database found. Use --zeit <path> or --json <path>");
                 }
+            } else {
+                print_info("Specify --zeit <path> or --json <path> to import");
             }
         }
 

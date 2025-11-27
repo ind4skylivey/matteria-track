@@ -119,10 +119,7 @@ impl ObsidianIntegration {
             fs::create_dir_all(parent)?;
         }
 
-        let time_blocks: Vec<String> = entries
-            .iter()
-            .map(|e| self.format_time_block(e))
-            .collect();
+        let time_blocks: Vec<String> = entries.iter().map(|e| self.format_time_block(e)).collect();
 
         let section_content = time_blocks.join("\n");
 
@@ -142,7 +139,7 @@ impl ObsidianIntegration {
             .entry
             .end
             .map(|e| e.with_timezone(&Local))
-            .unwrap_or_else(|| Local::now());
+            .unwrap_or_else(Local::now);
 
         let duration = entry.entry.duration();
         let hours = duration.num_hours();
@@ -195,7 +192,10 @@ impl ObsidianIntegration {
                 before, MATERIATRACK_HEADER, time_blocks, after
             ))
         } else {
-            Ok(format!("{}\n{}\n{}\n", content, MATERIATRACK_HEADER, time_blocks))
+            Ok(format!(
+                "{}\n{}\n{}\n",
+                content, MATERIATRACK_HEADER, time_blocks
+            ))
         }
     }
 
@@ -210,11 +210,7 @@ impl ObsidianIntegration {
         self.parse_time_blocks(&content, date)
     }
 
-    pub fn import_range(
-        &self,
-        start: NaiveDate,
-        end: NaiveDate,
-    ) -> Result<Vec<ImportedTimeBlock>> {
+    pub fn import_range(&self, start: NaiveDate, end: NaiveDate) -> Result<Vec<ImportedTimeBlock>> {
         let mut all_blocks = Vec::new();
         let mut current = start;
 
@@ -229,9 +225,8 @@ impl ObsidianIntegration {
     }
 
     fn parse_time_blocks(&self, content: &str, date: NaiveDate) -> Result<Vec<ImportedTimeBlock>> {
-        let re = regex::Regex::new(TIME_BLOCK_PATTERN).map_err(|e| {
-            crate::error::Error::Parse(format!("Invalid regex: {}", e))
-        })?;
+        let re = regex::Regex::new(TIME_BLOCK_PATTERN)
+            .map_err(|e| crate::error::Error::Parse(format!("Invalid regex: {}", e)))?;
 
         let mut blocks = Vec::new();
 
@@ -297,12 +292,7 @@ impl ObsidianIntegration {
                 .map(|entries| {
                     entries
                         .filter_map(|e| e.ok())
-                        .filter(|e| {
-                            e.path()
-                                .extension()
-                                .map(|ext| ext == "md")
-                                .unwrap_or(false)
-                        })
+                        .filter(|e| e.path().extension().map(|ext| ext == "md").unwrap_or(false))
                         .count()
                 })
                 .unwrap_or(0)

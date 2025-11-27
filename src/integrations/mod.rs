@@ -166,13 +166,12 @@ pub fn expand_path(path: &str) -> Result<PathBuf> {
                     "Cannot expand home directory".into(),
                 ))
             })
-    } else if path.starts_with('$') {
-        let var_end = path[1..]
+    } else if let Some(stripped) = path.strip_prefix('$') {
+        let var_end = stripped
             .find(|c: char| !c.is_alphanumeric() && c != '_')
-            .map(|i| i + 1)
-            .unwrap_or(path.len());
-        let var_name = &path[1..var_end];
-        let rest = &path[var_end..];
+            .unwrap_or(stripped.len());
+        let var_name = &stripped[..var_end];
+        let rest = &stripped[var_end..];
 
         std::env::var(var_name)
             .map(|val| PathBuf::from(val).join(rest.trim_start_matches('/')))

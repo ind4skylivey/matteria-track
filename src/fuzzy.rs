@@ -33,7 +33,11 @@ impl FuzzyFinder {
         self.matcher.fuzzy_match(text, pattern)
     }
 
-    pub fn find_projects<'a>(&self, pattern: &str, projects: &'a [Project]) -> Vec<ScoredItem<&'a Project>> {
+    pub fn find_projects<'a>(
+        &self,
+        pattern: &str,
+        projects: &'a [Project],
+    ) -> Vec<ScoredItem<&'a Project>> {
         let mut results: Vec<_> = projects
             .iter()
             .filter_map(|p| {
@@ -75,7 +79,11 @@ impl FuzzyFinder {
         results
     }
 
-    pub fn find_best_project<'a>(&self, pattern: &str, projects: &'a [Project]) -> Option<&'a Project> {
+    pub fn find_best_project<'a>(
+        &self,
+        pattern: &str,
+        projects: &'a [Project],
+    ) -> Option<&'a Project> {
         self.find_projects(pattern, projects)
             .into_iter()
             .next()
@@ -83,7 +91,10 @@ impl FuzzyFinder {
     }
 
     pub fn find_best_task<'a>(&self, pattern: &str, tasks: &'a [Task]) -> Option<&'a Task> {
-        self.find_tasks(pattern, tasks).into_iter().next().map(|s| s.item)
+        self.find_tasks(pattern, tasks)
+            .into_iter()
+            .next()
+            .map(|s| s.item)
     }
 }
 
@@ -314,7 +325,7 @@ impl InteractivePicker {
             output.push_str("  (no matches)\n");
         }
 
-        output.push_str(&"\n");
+        output.push('\n');
         output.push_str(&"─".repeat(50));
         output.push_str("\n[↑/↓] Navigate  [Enter] Select  [Esc] Cancel\n");
 
@@ -324,7 +335,10 @@ impl InteractivePicker {
     pub fn run_interactive(&mut self) -> Option<PickerItem> {
         // Simple fallback for non-interactive mode
         println!("{}", self.render(10));
-        println!("\nEnter selection number (1-{}): ", self.filtered_indices.len());
+        println!(
+            "\nEnter selection number (1-{}): ",
+            self.filtered_indices.len()
+        );
 
         let stdin = io::stdin();
         let mut input = String::new();

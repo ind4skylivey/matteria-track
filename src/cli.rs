@@ -395,8 +395,7 @@ mod tests {
 
     #[test]
     fn test_track_command() {
-        let cli =
-            Cli::try_parse_from(["mtrack", "track", "-p", "project", "-t", "task"]).unwrap();
+        let cli = Cli::try_parse_from(["mtrack", "track", "-p", "project", "-t", "task"]).unwrap();
         match cli.command {
             Commands::Track { project, task, .. } => {
                 assert_eq!(project, "project");

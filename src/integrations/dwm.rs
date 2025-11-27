@@ -41,12 +41,7 @@ impl DwmIntegration {
         self
     }
 
-    pub fn format_status(
-        &self,
-        project: &str,
-        task: &str,
-        duration_secs: i64,
-    ) -> String {
+    pub fn format_status(&self, project: &str, task: &str, duration_secs: i64) -> String {
         let materia = "💎";
         let duration = format_duration(duration_secs);
 
@@ -69,12 +64,7 @@ impl DwmIntegration {
         self.format_status(project, task, duration_secs)
     }
 
-    pub fn format_polybar(
-        &self,
-        project: &str,
-        task: &str,
-        duration_secs: i64,
-    ) -> String {
+    pub fn format_polybar(&self, project: &str, task: &str, duration_secs: i64) -> String {
         let (r, g, b) = self.theme.primary_color();
         let color = format!("#{:02x}{:02x}{:02x}", r, g, b);
         let duration = format_duration(duration_secs);
@@ -85,38 +75,26 @@ impl DwmIntegration {
         )
     }
 
-    pub fn format_i3blocks(
-        &self,
-        project: &str,
-        task: &str,
-        duration_secs: i64,
-    ) -> String {
+    pub fn format_i3blocks(&self, project: &str, task: &str, duration_secs: i64) -> String {
         let duration = format_duration(duration_secs);
         format!("💎 {} > {} | {}", project, task, duration)
     }
 
-    pub fn format_waybar(
-        &self,
-        project: &str,
-        task: &str,
-        duration_secs: i64,
-    ) -> WaybarOutput {
+    pub fn format_waybar(&self, project: &str, task: &str, duration_secs: i64) -> WaybarOutput {
         let duration = format_duration(duration_secs);
 
         WaybarOutput {
             text: format!("💎 {} | ⏱ {}", project, duration),
-            tooltip: format!("Project: {}\nTask: {}\nDuration: {}", project, task, duration),
+            tooltip: format!(
+                "Project: {}\nTask: {}\nDuration: {}",
+                project, task, duration
+            ),
             class: format!("materia-{}", theme_class(self.theme)),
             percentage: calculate_day_percentage(duration_secs),
         }
     }
 
-    pub fn format_lemonbar(
-        &self,
-        project: &str,
-        task: &str,
-        duration_secs: i64,
-    ) -> String {
+    pub fn format_lemonbar(&self, project: &str, task: &str, duration_secs: i64) -> String {
         let (r, g, b) = self.theme.primary_color();
         let color = format!("#{:02x}{:02x}{:02x}", r, g, b);
         let duration = format_duration(duration_secs);
@@ -127,12 +105,7 @@ impl DwmIntegration {
         )
     }
 
-    pub fn format_tmux(
-        &self,
-        project: &str,
-        _task: &str,
-        duration_secs: i64,
-    ) -> String {
+    pub fn format_tmux(&self, project: &str, _task: &str, duration_secs: i64) -> String {
         let (r, g, b) = self.theme.primary_color();
         let duration = format_duration(duration_secs);
 
@@ -165,7 +138,10 @@ impl DwmIntegration {
             .replace("{hours}", &hours.to_string())
             .replace("{minutes}", &format!("{:02}", minutes))
             .replace("{seconds}", &format!("{:02}", seconds))
-            .replace("{hh:mm:ss}", &format!("{:02}:{:02}:{:02}", hours, minutes, seconds))
+            .replace(
+                "{hh:mm:ss}",
+                &format!("{:02}:{:02}:{:02}", hours, minutes, seconds),
+            )
             .replace("{hh:mm}", &format!("{:02}:{:02}", hours, minutes))
     }
 }
@@ -334,12 +310,8 @@ mod tests {
     #[test]
     fn test_format_custom() {
         let dwm = DwmIntegration::new();
-        let custom = dwm.format_custom(
-            "{materia} {project} ({hh:mm})",
-            "MyProject",
-            "MyTask",
-            5400,
-        );
+        let custom =
+            dwm.format_custom("{materia} {project} ({hh:mm})", "MyProject", "MyTask", 5400);
 
         assert_eq!(custom, "💎 MyProject (01:30)");
     }
