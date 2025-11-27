@@ -2,9 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: ["**"]
   pull_request:
-    branches: [main]
+    branches: ["**"]
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
@@ -27,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: ${{ matrix.rust }}
 
@@ -49,7 +50,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-${{ matrix.rust }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Run unit tests
         run: cargo test --lib --bins --all-features --verbose
@@ -66,8 +67,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@v1
         with:
+          toolchain: stable
           components: clippy
 
       - name: Cache cargo registry
@@ -77,10 +79,10 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-stable-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Run clippy
-        run: cargo clippy --all-features -- -D warnings || true
+        run: cargo clippy --all-targets --all-features -- -D warnings
 
   format:
     name: Format
@@ -90,8 +92,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@v1
         with:
+          toolchain: stable
           components: rustfmt
 
       - name: Check formatting
@@ -117,13 +120,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@v1
         with:
+          toolchain: stable
           targets: ${{ matrix.target }}
 
       - name: Install musl tools (Linux)
         if: matrix.target == 'x86_64-unknown-linux-musl'
-        run: sudo apt-get install -y musl-tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y musl-tools
 
       - name: Cache cargo registry
         uses: actions/cache@v4
@@ -132,7 +138,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-${{ matrix.target }}-stable-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
