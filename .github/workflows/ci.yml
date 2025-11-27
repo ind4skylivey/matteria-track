@@ -51,11 +51,12 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Run tests
-        run: cargo test --all-features --verbose
+      - name: Run unit tests
+        run: cargo test --lib --bins --all-features --verbose
 
-      - name: Run tests (release)
-        run: cargo test --all-features --release
+      - name: Run integration tests
+        run: cargo test --test '*' --all-features --verbose
+        timeout-minutes: 10
 
   lint:
     name: Lint
