@@ -24,10 +24,6 @@ jobs:
             target: x86_64-unknown-linux-musl
             artifact_name: materiatrack
             asset_name: materiatrack-linux-x86_64-musl
-          - os: ubuntu-latest
-            target: aarch64-unknown-linux-gnu
-            artifact_name: materiatrack
-            asset_name: materiatrack-linux-aarch64
           - os: macos-latest
             target: x86_64-apple-darwin
             artifact_name: materiatrack
@@ -46,34 +42,15 @@ jobs:
         with:
           targets: ${{ matrix.target }}
 
-      - name: Install cross-compilation tools
-        if: matrix.target == 'aarch64-unknown-linux-gnu'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc-aarch64-linux-gnu
-
       - name: Install musl tools
         if: matrix.target == 'x86_64-unknown-linux-musl'
         run: sudo apt-get install -y musl-tools
 
       - name: Build
-        run: |
-          if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
-            export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
-          fi
-          cargo build --release --target ${{ matrix.target }}
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Strip binary
-        run: |
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            if [ "${{ matrix.target }}" = "aarch64-unknown-linux-gnu" ]; then
-              aarch64-linux-gnu-strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} || true
-            else
-              strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} || true
-            fi
-          else
-            strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} || true
-          fi
+        run: strip target/${{ matrix.target }}/release/${{ matrix.artifact_name }} 2>/dev/null || true
 
       - name: Create archive
         run: |
@@ -81,7 +58,6 @@ jobs:
           cp target/${{ matrix.target }}/release/${{ matrix.artifact_name }} dist/
           cp README.md LICENSE dist/ 2>/dev/null || true
           cp -r man dist/ 2>/dev/null || true
-          cp -r completions dist/ 2>/dev/null || true
           cd dist
           tar -czvf ../${{ matrix.asset_name }}.tar.gz *
 
@@ -138,18 +114,19 @@ jobs:
             curl -sSL https://raw.githubusercontent.com/ind4skylivey/matteria-track/main/build/install.sh | bash
             ```
 
-            **Arch Linux (AUR):**
-            ```bash
-            yay -S materiatrack
-            ```
-
             **From source:**
             ```bash
             cargo install materiatrack
             ```
 
+            ### Available Binaries
+            - Linux x86_64 (glibc)
+            - Linux x86_64 (musl/static)
+            - macOS x86_64
+            - macOS ARM64 (Apple Silicon)
+
             ### Checksums
-            SHA256 checksums are provided for each binary.
+            SHA256 checksums provided for each binary.
 
             ### Changelog
             See [CHANGELOG.md](https://github.com/ind4skylivey/matteria-track/blob/main/CHANGELOG.md)
