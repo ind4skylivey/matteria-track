@@ -1,0 +1,1332 @@
+#compdef materiatrack
+
+autoload -U is-at-least
+
+_materiatrack() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_materiatrack_commands" \
+"*::: :->materiatrack" \
+&& ret=0
+    case $state in
+    (materiatrack)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-command-$line[1]:"
+        case $line[1] in
+            (track)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Project name]:PROJECT:_default' \
+'--project=[Project name]:PROJECT:_default' \
+'-t+[Task name]:TASK:_default' \
+'--task=[Task name]:TASK:_default' \
+'--begin=[Start time offset (e.g., -0\:15 for 15 minutes ago)]:BEGIN:_default' \
+'-n+[Optional notes for this tracking session]:NOTES:_default' \
+'--notes=[Optional notes for this tracking session]:NOTES:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(t)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Project name]:PROJECT:_default' \
+'--project=[Project name]:PROJECT:_default' \
+'-t+[Task name]:TASK:_default' \
+'--task=[Task name]:TASK:_default' \
+'--begin=[Start time offset (e.g., -0\:15 for 15 minutes ago)]:BEGIN:_default' \
+'-n+[Optional notes for this tracking session]:NOTES:_default' \
+'--notes=[Optional notes for this tracking session]:NOTES:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(finish)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Switch to a different task when finishing]:TASK:_default' \
+'--task=[Switch to a different task when finishing]:TASK:_default' \
+'--begin=[Adjust the start time]:BEGIN:_default' \
+'--end=[Set the end time offset]:END:_default' \
+'-n+[Add notes to the entry]:NOTES:_default' \
+'--notes=[Add notes to the entry]:NOTES:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(f)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Switch to a different task when finishing]:TASK:_default' \
+'--task=[Switch to a different task when finishing]:TASK:_default' \
+'--begin=[Adjust the start time]:BEGIN:_default' \
+'--end=[Set the end time offset]:END:_default' \
+'-n+[Add notes to the entry]:NOTES:_default' \
+'--notes=[Add notes to the entry]:NOTES:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(s)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'--since=[Show entries since this datetime (ISO8601 or relative)]:SINCE:_default' \
+'-n+[Maximum number of entries to show]:LIMIT:_default' \
+'--limit=[Maximum number of entries to show]:LIMIT:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--only-projects-and-tasks[Only show projects and tasks (no entries)]' \
+'--total[Show total time in output]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(l)
+_arguments "${_arguments_options[@]}" : \
+'--since=[Show entries since this datetime (ISO8601 or relative)]:SINCE:_default' \
+'-n+[Maximum number of entries to show]:LIMIT:_default' \
+'--limit=[Maximum number of entries to show]:LIMIT:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--only-projects-and-tasks[Only show projects and tasks (no entries)]' \
+'--total[Show total time in output]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(project)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_materiatrack__project_commands" \
+"*::: :->project" \
+&& ret=0
+
+    case $state in
+    (project)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-project-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+'-C+[Project color (hex code)]:COLOR:_default' \
+'--color=[Project color (hex code)]:COLOR:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':name -- Project name:_default' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+'--new-name=[New project name]:NEW_NAME:_default' \
+'-C+[New color]:COLOR:_default' \
+'--color=[New color]:COLOR:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':name -- Project name:_default' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--force[Force removal without confirmation]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':name -- Project name:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__project__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-project-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(task)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_materiatrack__task_commands" \
+"*::: :->task" \
+&& ret=0
+
+    case $state in
+    (task)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-task-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Project to add task to]:PROJECT:_default' \
+'--project=[Project to add task to]:PROJECT:_default' \
+'-g+[Git repository path for this task]:GIT_REPO:_default' \
+'--git-repo=[Git repository path for this task]:GIT_REPO:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':name -- Task name:_default' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Filter by project]:PROJECT:_default' \
+'--project=[Filter by project]:PROJECT:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Project the task belongs to]:PROJECT:_default' \
+'--project=[Project the task belongs to]:PROJECT:_default' \
+'--new-name=[New task name]:NEW_NAME:_default' \
+'-g+[New git repository path]:GIT_REPO:_default' \
+'--git-repo=[New git repository path]:GIT_REPO:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':name -- Task name:_default' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Project the task belongs to]:PROJECT:_default' \
+'--project=[Project the task belongs to]:PROJECT:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--force[Force removal without confirmation]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':name -- Task name:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__task__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-task-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(stats)
+_arguments "${_arguments_options[@]}" : \
+'--since=[Show stats since this date]:SINCE:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--today[Show stats for today only]' \
+'--week[Show stats for this week]' \
+'--month[Show stats for this month]' \
+'--by-project[Group stats by project]' \
+'--by-task[Group stats by task]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(statusbar)
+_arguments "${_arguments_options[@]}" : \
+'--icon=[Icon prefix]:ICON:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-s[Use short format]' \
+'--short[Use short format]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(dashboard)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(ui)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+":: :_materiatrack__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-config-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--force[Force reset without confirmation]' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':key -- Configuration key (e.g., ui.theme):_default' \
+':value -- Value to set:_default' \
+&& ret=0
+;;
+(path)
+_arguments "${_arguments_options[@]}" : \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__config__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-config-help-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(path)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(completions)
+_arguments "${_arguments_options[@]}" : \
+'-o+[Output directory (defaults to ./completions)]:OUT_DIR:_default' \
+'--out-dir=[Output directory (defaults to ./completions)]:OUT_DIR:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+':shell -- Target shell:(bash elvish fish powershell zsh)' \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+'--zeit=[Import from Zeit database]:ZEIT:_default' \
+'--json=[Import from JSON file]:JSON:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(export)
+_arguments "${_arguments_options[@]}" : \
+'-F+[Export format (json, csv)]:EXPORT_FORMAT:_default' \
+'--export-format=[Export format (json, csv)]:EXPORT_FORMAT:_default' \
+'-o+[Output file path]:OUTPUT:_default' \
+'--output=[Output file path]:OUTPUT:_default' \
+'--since=[Export entries since this date]:SINCE:_default' \
+'-c+[Configuration file path]:CONFIG:_default' \
+'--config=[Configuration file path]:CONFIG:_default' \
+'-f+[Output format]:FORMAT:(pretty json plain statusbar)' \
+'--format=[Output format]:FORMAT:(pretty json plain statusbar)' \
+'-v[Verbose output]' \
+'--verbose[Verbose output]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'-V[Print version]' \
+'--version[Print version]' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-help-command-$line[1]:"
+        case $line[1] in
+            (track)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(finish)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(status)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(project)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__help__project_commands" \
+"*::: :->project" \
+&& ret=0
+
+    case $state in
+    (project)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-help-project-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(task)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__help__task_commands" \
+"*::: :->task" \
+&& ret=0
+
+    case $state in
+    (task)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-help-task-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(stats)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(statusbar)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(dashboard)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(config)
+_arguments "${_arguments_options[@]}" : \
+":: :_materiatrack__help__config_commands" \
+"*::: :->config" \
+&& ret=0
+
+    case $state in
+    (config)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:materiatrack-help-config-command-$line[1]:"
+        case $line[1] in
+            (show)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(edit)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(reset)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(path)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(completions)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(export)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_materiatrack_commands] )) ||
+_materiatrack_commands() {
+    local commands; commands=(
+'track:⚔️ Start tracking time on a task' \
+'t:⚔️ Start tracking time on a task' \
+'finish:✓ Finish the current tracking session' \
+'f:✓ Finish the current tracking session' \
+'status:💎 Show current tracking status' \
+'s:💎 Show current tracking status' \
+'list:✨ List tracked entries' \
+'l:✨ List tracked entries' \
+'project:🏆 Manage projects' \
+'task:⭐ Manage tasks' \
+'stats:📊 Show time statistics' \
+'statusbar:🖥️ Output for DWM/i3 statusbar' \
+'dashboard:🎨 Launch interactive TUI dashboard' \
+'ui:🎨 Launch interactive TUI dashboard' \
+'config:⚙️ Manage configuration' \
+'completions:Generate shell completions (bash, zsh, fish)' \
+'import:📤 Import data from Zeit or other trackers' \
+'export:📥 Export data to various formats' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack commands' commands "$@"
+}
+(( $+functions[_materiatrack__completions_commands] )) ||
+_materiatrack__completions_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack completions commands' commands "$@"
+}
+(( $+functions[_materiatrack__config_commands] )) ||
+_materiatrack__config_commands() {
+    local commands; commands=(
+'show:Show current configuration' \
+'edit:Edit configuration file' \
+'reset:Reset configuration to defaults' \
+'set:Set a configuration value' \
+'path:Show configuration file path' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack config commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__edit_commands] )) ||
+_materiatrack__config__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config edit commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help_commands] )) ||
+_materiatrack__config__help_commands() {
+    local commands; commands=(
+'show:Show current configuration' \
+'edit:Edit configuration file' \
+'reset:Reset configuration to defaults' \
+'set:Set a configuration value' \
+'path:Show configuration file path' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack config help commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help__edit_commands] )) ||
+_materiatrack__config__help__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config help edit commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help__help_commands] )) ||
+_materiatrack__config__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config help help commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help__path_commands] )) ||
+_materiatrack__config__help__path_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config help path commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help__reset_commands] )) ||
+_materiatrack__config__help__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config help reset commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help__set_commands] )) ||
+_materiatrack__config__help__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config help set commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__help__show_commands] )) ||
+_materiatrack__config__help__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config help show commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__path_commands] )) ||
+_materiatrack__config__path_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config path commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__reset_commands] )) ||
+_materiatrack__config__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config reset commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__set_commands] )) ||
+_materiatrack__config__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config set commands' commands "$@"
+}
+(( $+functions[_materiatrack__config__show_commands] )) ||
+_materiatrack__config__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack config show commands' commands "$@"
+}
+(( $+functions[_materiatrack__dashboard_commands] )) ||
+_materiatrack__dashboard_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack dashboard commands' commands "$@"
+}
+(( $+functions[_materiatrack__export_commands] )) ||
+_materiatrack__export_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack export commands' commands "$@"
+}
+(( $+functions[_materiatrack__finish_commands] )) ||
+_materiatrack__finish_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack finish commands' commands "$@"
+}
+(( $+functions[_materiatrack__help_commands] )) ||
+_materiatrack__help_commands() {
+    local commands; commands=(
+'track:⚔️ Start tracking time on a task' \
+'finish:✓ Finish the current tracking session' \
+'status:💎 Show current tracking status' \
+'list:✨ List tracked entries' \
+'project:🏆 Manage projects' \
+'task:⭐ Manage tasks' \
+'stats:📊 Show time statistics' \
+'statusbar:🖥️ Output for DWM/i3 statusbar' \
+'dashboard:🎨 Launch interactive TUI dashboard' \
+'config:⚙️ Manage configuration' \
+'completions:Generate shell completions (bash, zsh, fish)' \
+'import:📤 Import data from Zeit or other trackers' \
+'export:📥 Export data to various formats' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack help commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__completions_commands] )) ||
+_materiatrack__help__completions_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help completions commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__config_commands] )) ||
+_materiatrack__help__config_commands() {
+    local commands; commands=(
+'show:Show current configuration' \
+'edit:Edit configuration file' \
+'reset:Reset configuration to defaults' \
+'set:Set a configuration value' \
+'path:Show configuration file path' \
+    )
+    _describe -t commands 'materiatrack help config commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__config__edit_commands] )) ||
+_materiatrack__help__config__edit_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help config edit commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__config__path_commands] )) ||
+_materiatrack__help__config__path_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help config path commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__config__reset_commands] )) ||
+_materiatrack__help__config__reset_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help config reset commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__config__set_commands] )) ||
+_materiatrack__help__config__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help config set commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__config__show_commands] )) ||
+_materiatrack__help__config__show_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help config show commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__dashboard_commands] )) ||
+_materiatrack__help__dashboard_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help dashboard commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__export_commands] )) ||
+_materiatrack__help__export_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help export commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__finish_commands] )) ||
+_materiatrack__help__finish_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help finish commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__help_commands] )) ||
+_materiatrack__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help help commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__import_commands] )) ||
+_materiatrack__help__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help import commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__list_commands] )) ||
+_materiatrack__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help list commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__project_commands] )) ||
+_materiatrack__help__project_commands() {
+    local commands; commands=(
+'add:Add a new project' \
+'list:List all projects' \
+'update:Update a project' \
+'remove:Remove a project' \
+    )
+    _describe -t commands 'materiatrack help project commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__project__add_commands] )) ||
+_materiatrack__help__project__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help project add commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__project__list_commands] )) ||
+_materiatrack__help__project__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help project list commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__project__remove_commands] )) ||
+_materiatrack__help__project__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help project remove commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__project__update_commands] )) ||
+_materiatrack__help__project__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help project update commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__stats_commands] )) ||
+_materiatrack__help__stats_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help stats commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__status_commands] )) ||
+_materiatrack__help__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help status commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__statusbar_commands] )) ||
+_materiatrack__help__statusbar_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help statusbar commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__task_commands] )) ||
+_materiatrack__help__task_commands() {
+    local commands; commands=(
+'add:Add a new task' \
+'list:List all tasks' \
+'update:Update a task' \
+'remove:Remove a task' \
+    )
+    _describe -t commands 'materiatrack help task commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__task__add_commands] )) ||
+_materiatrack__help__task__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help task add commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__task__list_commands] )) ||
+_materiatrack__help__task__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help task list commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__task__remove_commands] )) ||
+_materiatrack__help__task__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help task remove commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__task__update_commands] )) ||
+_materiatrack__help__task__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help task update commands' commands "$@"
+}
+(( $+functions[_materiatrack__help__track_commands] )) ||
+_materiatrack__help__track_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack help track commands' commands "$@"
+}
+(( $+functions[_materiatrack__import_commands] )) ||
+_materiatrack__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack import commands' commands "$@"
+}
+(( $+functions[_materiatrack__list_commands] )) ||
+_materiatrack__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack list commands' commands "$@"
+}
+(( $+functions[_materiatrack__project_commands] )) ||
+_materiatrack__project_commands() {
+    local commands; commands=(
+'add:Add a new project' \
+'list:List all projects' \
+'update:Update a project' \
+'remove:Remove a project' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack project commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__add_commands] )) ||
+_materiatrack__project__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project add commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__help_commands] )) ||
+_materiatrack__project__help_commands() {
+    local commands; commands=(
+'add:Add a new project' \
+'list:List all projects' \
+'update:Update a project' \
+'remove:Remove a project' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack project help commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__help__add_commands] )) ||
+_materiatrack__project__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project help add commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__help__help_commands] )) ||
+_materiatrack__project__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project help help commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__help__list_commands] )) ||
+_materiatrack__project__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project help list commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__help__remove_commands] )) ||
+_materiatrack__project__help__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project help remove commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__help__update_commands] )) ||
+_materiatrack__project__help__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project help update commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__list_commands] )) ||
+_materiatrack__project__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project list commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__remove_commands] )) ||
+_materiatrack__project__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project remove commands' commands "$@"
+}
+(( $+functions[_materiatrack__project__update_commands] )) ||
+_materiatrack__project__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack project update commands' commands "$@"
+}
+(( $+functions[_materiatrack__stats_commands] )) ||
+_materiatrack__stats_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack stats commands' commands "$@"
+}
+(( $+functions[_materiatrack__status_commands] )) ||
+_materiatrack__status_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack status commands' commands "$@"
+}
+(( $+functions[_materiatrack__statusbar_commands] )) ||
+_materiatrack__statusbar_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack statusbar commands' commands "$@"
+}
+(( $+functions[_materiatrack__task_commands] )) ||
+_materiatrack__task_commands() {
+    local commands; commands=(
+'add:Add a new task' \
+'list:List all tasks' \
+'update:Update a task' \
+'remove:Remove a task' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack task commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__add_commands] )) ||
+_materiatrack__task__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task add commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__help_commands] )) ||
+_materiatrack__task__help_commands() {
+    local commands; commands=(
+'add:Add a new task' \
+'list:List all tasks' \
+'update:Update a task' \
+'remove:Remove a task' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'materiatrack task help commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__help__add_commands] )) ||
+_materiatrack__task__help__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task help add commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__help__help_commands] )) ||
+_materiatrack__task__help__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task help help commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__help__list_commands] )) ||
+_materiatrack__task__help__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task help list commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__help__remove_commands] )) ||
+_materiatrack__task__help__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task help remove commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__help__update_commands] )) ||
+_materiatrack__task__help__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task help update commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__list_commands] )) ||
+_materiatrack__task__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task list commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__remove_commands] )) ||
+_materiatrack__task__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task remove commands' commands "$@"
+}
+(( $+functions[_materiatrack__task__update_commands] )) ||
+_materiatrack__task__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack task update commands' commands "$@"
+}
+(( $+functions[_materiatrack__track_commands] )) ||
+_materiatrack__track_commands() {
+    local commands; commands=()
+    _describe -t commands 'materiatrack track commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_materiatrack" ]; then
+    _materiatrack "$@"
+else
+    compdef _materiatrack materiatrack
+fi

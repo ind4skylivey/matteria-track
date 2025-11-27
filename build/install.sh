@@ -23,7 +23,7 @@ print_banner() {
     echo -e "${CYAN}"
     cat << 'EOF'
 ╔══════════════════════════════════════════════════════════════╗
-║  💎 MateriaTrack Installer                                   ║
+║  💎 MatteriaTrack Installer                                   ║
 ║     "Equipping your system with Materia"                     ║
 ╚══════════════════════════════════════════════════════════════╝
 EOF
@@ -156,7 +156,7 @@ download_release() {
     local tmp_dir
     tmp_dir=$(mktemp -d)
 
-    log_info "Downloading MateriaTrack v${version} for ${target}..."
+    log_info "Downloading MatteriaTrack v${version} for ${target}..."
 
     if command -v curl &>/dev/null; then
         curl -fsSL "$url" -o "$tmp_dir/materiatrack.tar.gz" || {
@@ -335,7 +335,7 @@ verify_installation() {
 print_post_install() {
     echo ""
     echo -e "${GREEN}╔══════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║  💎 MateriaTrack installed successfully!                     ║${NC}"
+    echo -e "${GREEN}║  💎 MatteriaTrack installed successfully!                     ║${NC}"
     echo -e "${GREEN}╚══════════════════════════════════════════════════════════════╝${NC}"
     echo ""
     echo "Quick start:"
@@ -428,7 +428,7 @@ remote_install() {
 
 show_help() {
     cat << EOF
-MateriaTrack Installer
+MatteriaTrack Installer
 
 USAGE:
     $0 [OPTIONS]

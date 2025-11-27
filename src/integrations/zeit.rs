@@ -1,4 +1,4 @@
-//! Zeit database import for MateriaTrack
+//! Zeit database import for MatteriaTrack
 //!
 //! Imports time entries from Zeit time tracker SQLite database.
 

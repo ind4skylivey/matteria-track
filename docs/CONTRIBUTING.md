@@ -1,6 +1,6 @@
-# Contributing to MateriaTrack
+# Contributing to MatteriaTrack
 
-Thank you for your interest in contributing to MateriaTrack!
+Thank you for your interest in contributing to MatteriaTrack!
 
 ## Code of Conduct
 
@@ -38,7 +38,7 @@ RUST_LOG=debug cargo run -- track -p "Test" -t "Dev"
 1. Check existing issues first
 2. Use the bug report template
 3. Include:
-   - MateriaTrack version (`mtrack --version`)
+   - MatteriaTrack version (`mtrack --version`)
    - OS and architecture
    - Steps to reproduce
    - Expected vs actual behavior
@@ -48,7 +48,7 @@ RUST_LOG=debug cargo run -- track -p "Test" -t "Dev"
 
 1. Check existing issues/discussions
 2. Describe the use case
-3. Explain how it fits MateriaTrack's vision
+3. Explain how it fits MatteriaTrack's vision
 4. Be open to feedback
 
 ### Pull Requests

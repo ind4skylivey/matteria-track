@@ -1,4 +1,4 @@
-//! Secure export functionality for MateriaTrack
+//! Secure export functionality for MatteriaTrack
 //!
 //! Provides encrypted exports and data sanitization.
 
@@ -250,7 +250,7 @@ impl SecureExporter {
     }
 
     fn format_markdown(&self, entries: &[&EntryWithDetails], sanitize: bool) -> Result<String> {
-        let mut md = String::from("# MateriaTrack Export\n\n");
+        let mut md = String::from("# MatteriaTrack Export\n\n");
         md.push_str(&format!(
             "Generated: {}\n\n",
             Utc::now().format("%Y-%m-%d %H:%M:%S UTC")

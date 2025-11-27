@@ -1,4 +1,4 @@
-//! Security module for MateriaTrack
+//! Security module for MatteriaTrack
 //!
 //! Provides:
 //! - GPG-based database encryption

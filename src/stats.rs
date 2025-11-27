@@ -1,4 +1,4 @@
-//! Statistics and reporting for MateriaTrack
+//! Statistics and reporting for MatteriaTrack
 
 use crate::database::Database;
 use crate::error::Result;

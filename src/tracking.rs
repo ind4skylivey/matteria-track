@@ -1,4 +1,4 @@
-//! Time tracking engine for MateriaTrack
+//! Time tracking engine for MatteriaTrack
 
 use crate::config::Config;
 use crate::database::Database;

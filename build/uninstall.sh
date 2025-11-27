@@ -19,7 +19,7 @@ print_banner() {
     echo -e "${CYAN}"
     cat << 'EOF'
 ╔══════════════════════════════════════════════════════════════╗
-║  💎 MateriaTrack Uninstaller                                 ║
+║  💎 MatteriaTrack Uninstaller                                 ║
 ║     "Returning Materia to the Lifestream"                    ║
 ╚══════════════════════════════════════════════════════════════╝
 EOF
@@ -195,18 +195,18 @@ remove_data() {
 print_post_uninstall() {
     echo ""
     echo -e "${GREEN}╔══════════════════════════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║  💎 MateriaTrack uninstalled successfully!                   ║${NC}"
+    echo -e "${GREEN}║  💎 MatteriaTrack uninstalled successfully!                   ║${NC}"
     echo -e "${GREEN}╚══════════════════════════════════════════════════════════════╝${NC}"
     echo ""
     echo -e "${BLUE}\"The Materia has returned to the Planet...\"${NC}"
     echo ""
-    echo "Thank you for using MateriaTrack!"
+    echo "Thank you for using MatteriaTrack!"
     echo "Feedback: https://github.com/ind4skylivey/matteria-track/issues"
 }
 
 show_help() {
     cat << EOF
-MateriaTrack Uninstaller
+MatteriaTrack Uninstaller
 
 USAGE:
     $0 [OPTIONS]

@@ -1,6 +1,6 @@
-# MateriaTrack Documentation
+# MatteriaTrack Documentation
 
-Welcome to MateriaTrack - a mystical, Final Fantasy-themed CLI time tracker.
+Welcome to MatteriaTrack - a mystical, Final Fantasy-themed CLI time tracker.
 
 ## Table of Contents
 

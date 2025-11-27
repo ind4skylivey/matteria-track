@@ -66,7 +66,7 @@ mtrack achievements
 
 ## Easter Eggs
 
-MateriaTrack includes several hidden easter eggs:
+MatteriaTrack includes several hidden easter eggs:
 
 ### Konami Code
 

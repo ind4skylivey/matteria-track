@@ -1,4 +1,4 @@
-# MateriaTrack 💎
+# MatteriaTrack 💎
 
 [![Release](https://img.shields.io/github/v/release/ind4skylivey/matteria-track?style=for-the-badge)](https://github.com/ind4skylivey/matteria-track/releases)
 [![Tests](https://img.shields.io/github/actions/workflow/status/ind4skylivey/matteria-track/ci.yml?style=for-the-badge&label=tests)](https://github.com/ind4skylivey/matteria-track/actions)
@@ -11,7 +11,7 @@
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
-║  💎 MateriaTrack - Time Tracking Forged in Mako Energy 💎    ║
+║  💎 MatteriaTrack - Time Tracking Forged in Mako Energy 💎    ║
 ║     "Master your time, master your destiny"                  ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
@@ -99,25 +99,25 @@ All assets live at the GitHub Release page: https://github.com/ind4skylivey/matt
 ## Demo
 
 ```
-$ mtrack track -p "MateriaTrack" -t "README"
+$ mtrack track -p "MatteriaTrack" -t "README"
 
-💎 MateriaTrack v1.0.0
+💎 MatteriaTrack v1.0.0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔥 Started tracking: MateriaTrack > README
+🔥 Started tracking: MatteriaTrack > README
    ⏰ 14:30:00
 
 $ mtrack status
 
 💎 Currently Tracking
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🏔️ Project: MateriaTrack
+🏔️ Project: MatteriaTrack
 ⚔️ Task: README
 ⏱️ Duration: 00:45:23
    Started: 14:30:00
 
 $ mtrack finish
 
-✓ Tracked: MateriaTrack > README (0h 45m)
+✓ Tracked: MatteriaTrack > README (0h 45m)
 ```
 
 ## Themes

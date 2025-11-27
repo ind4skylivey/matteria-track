@@ -1,4 +1,4 @@
-//! Achievement system for MateriaTrack
+//! Achievement system for MatteriaTrack
 //!
 //! Final Fantasy-inspired achievements and milestones.
 
@@ -545,7 +545,7 @@ pub fn format_achievement_unlocked(achievement: &Achievement) -> String {
 pub fn format_achievements_list(progress: &AchievementProgress) -> String {
     let mut output = String::new();
 
-    output.push_str("\n💎 MateriaTrack Achievements 💎\n");
+    output.push_str("\n💎 MatteriaTrack Achievements 💎\n");
     output.push_str(&"═".repeat(50));
     output.push_str(&format!(
         "\n\nProgress: {:.1}% | Points: {}\n\n",

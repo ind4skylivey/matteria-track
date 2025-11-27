@@ -1,4 +1,4 @@
-//! DWM/i3/Polybar statusbar integration for MateriaTrack
+//! DWM/i3/Polybar statusbar integration for MatteriaTrack
 //!
 //! Provides compact statusbar output with Nerd Font icons.
 
@@ -219,7 +219,7 @@ fn rgb_to_256(r: u8, g: u8, b: u8) -> u8 {
 pub fn generate_dwm_script(config_path: &str) -> String {
     format!(
         r#"#!/bin/bash
-# MateriaTrack DWM Statusbar Script
+# MatteriaTrack DWM Statusbar Script
 # Auto-generated - do not edit manually
 
 MTRACK_BIN="materiatrack"

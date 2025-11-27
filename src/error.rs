@@ -1,4 +1,4 @@
-//! Error handling for MateriaTrack
+//! Error handling for MatteriaTrack
 
 use std::fmt;
 use std::io;

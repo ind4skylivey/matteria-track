@@ -1,6 +1,6 @@
 # Themes Guide
 
-MateriaTrack features 6 elemental Materia themes inspired by Final Fantasy.
+MatteriaTrack features 6 elemental Materia themes inspired by Final Fantasy.
 
 ## Available Themes
 

@@ -1,4 +1,4 @@
-//! MateriaTrack - Final Fantasy-themed time tracking CLI
+//! MatteriaTrack - Final Fantasy-themed time tracking CLI
 
 #![allow(dead_code)]
 
@@ -19,6 +19,8 @@ mod tracking;
 mod ui;
 
 use chrono::{DateTime, Local, NaiveDate, TimeZone, Utc};
+use clap::CommandFactory;
+use clap_complete::Shell;
 use cli::{Cli, Commands, ConfigCommands, OutputFormat, ProjectCommands, TaskCommands};
 use colored::Colorize;
 use config::Config;
@@ -49,6 +51,11 @@ async fn main() {
 
 async fn run() -> Result<()> {
     let cli = Cli::parse_args();
+
+    if let Commands::Completions { shell, out_dir } = &cli.command {
+        generate_completions(*shell, out_dir)?;
+        return Ok(());
+    }
 
     let config = if let Some(ref path) = cli.config {
         Config::load_from_path(path)?
@@ -542,7 +549,30 @@ async fn run() -> Result<()> {
                 println!("{}", content);
             }
         }
+
+        Commands::Completions { .. } => unreachable!("handled before config is loaded"),
     }
+
+    Ok(())
+}
+
+fn generate_completions(shell: Shell, out_dir: &str) -> Result<()> {
+    use clap_complete::generate_to;
+    use std::fs;
+    use std::path::Path;
+
+    let mut cmd = Cli::command();
+    cmd = cmd.name("materiatrack");
+
+    let out_dir_path = Path::new(out_dir);
+    fs::create_dir_all(out_dir_path)?;
+
+    let path = generate_to(shell, &mut cmd, "materiatrack", out_dir_path)?;
+    print_success(&format!(
+        "Generated {} completions at {}",
+        format!("{:?}", shell).to_lowercase(),
+        path.display()
+    ));
 
     Ok(())
 }

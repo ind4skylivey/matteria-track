@@ -1,4 +1,4 @@
-//! Integration modules for MateriaTrack
+//! Integration modules for MatteriaTrack
 //!
 //! Provides external integrations:
 //! - Git: Auto-import commits during tracking sessions

@@ -1,4 +1,4 @@
-//! Git integration for MateriaTrack
+//! Git integration for MatteriaTrack
 //!
 //! Auto-imports git commits made during tracking sessions.
 

@@ -1,4 +1,4 @@
-//! Audit logging system for MateriaTrack
+//! Audit logging system for MatteriaTrack
 //!
 //! Provides append-only, tamper-evident audit logging with SHA256 checksums.
 
@@ -397,7 +397,7 @@ impl AuditFilter {
 pub fn format_audit_report(entries: &[AuditEntry]) -> String {
     let mut output = String::new();
 
-    output.push_str("=== MateriaTrack Audit Report ===\n\n");
+    output.push_str("=== MatteriaTrack Audit Report ===\n\n");
     output.push_str(&format!("Total entries: {}\n", entries.len()));
 
     if let (Some(first), Some(last)) = (entries.first(), entries.last()) {

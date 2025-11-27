@@ -1,4 +1,4 @@
-//! Terminal UI dashboard for MateriaTrack
+//! Terminal UI dashboard for MatteriaTrack
 
 use crate::database::Database;
 use crate::error::Result;
@@ -181,7 +181,7 @@ fn draw_header<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Col
         .block(
             Block::default()
                 .borders(Borders::ALL)
-                .title(format!(" 💎 MateriaTrack {} ", app.theme.icon())),
+                .title(format!(" 💎 MatteriaTrack {} ", app.theme.icon())),
         )
         .select(app.selected_tab)
         .style(Style::default().fg(Color::White))
@@ -428,7 +428,7 @@ fn draw_footer<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Col
     let footer = Paragraph::new(Line::from(vec![
         Span::styled(" 💎 ", Style::default()),
         Span::styled(
-            format!("MateriaTrack {} ", app.theme.icon()),
+            format!("MatteriaTrack {} ", app.theme.icon()),
             Style::default().fg(primary),
         ),
         Span::raw("│ "),

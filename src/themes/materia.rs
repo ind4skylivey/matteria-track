@@ -1,4 +1,4 @@
-//! Materia theme definitions for MateriaTrack
+//! Materia theme definitions for MatteriaTrack
 //!
 //! Six elemental themes inspired by Final Fantasy's Materia system.
 

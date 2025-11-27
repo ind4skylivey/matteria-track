@@ -36,7 +36,7 @@ print_banner() {
     echo -e "${BLUE}"
     cat << 'EOF'
 ╔══════════════════════════════════════════════════════════════╗
-║  💎 MateriaTrack Build System                                ║
+║  💎 MatteriaTrack Build System                                ║
 ║     "Forging binaries in Mako Energy"                        ║
 ╚══════════════════════════════════════════════════════════════╝
 EOF
@@ -164,9 +164,35 @@ build_native() {
     fi
 }
 
+generate_completions() {
+    log_info "Generating shell completions from native binary..."
+
+    cd "$PROJECT_DIR"
+    cargo build --release
+
+    local bin="$PROJECT_DIR/target/release/materiatrack"
+    if [[ ! -x "$bin" ]]; then
+        log_warn "Native binary not found; skipping completions"
+        return
+    fi
+
+    mkdir -p "$PROJECT_DIR/completions"
+
+    for shell in bash zsh fish; do
+        if "$bin" completions "$shell" --out-dir "$PROJECT_DIR/completions" >/dev/null 2>&1; then
+            log_success "Generated $shell completions"
+        else
+            log_warn "Failed to generate $shell completions"
+        fi
+    done
+}
+
 build_all() {
     local successful=0
     local failed=0
+
+    build_native
+    generate_completions
 
     for target in "${TARGETS[@]}"; do
         if build_target "$target"; then
@@ -192,7 +218,7 @@ build_all() {
 
 show_help() {
     cat << EOF
-MateriaTrack Build System
+MatteriaTrack Build System
 
 USAGE:
     $0 [COMMAND] [OPTIONS]

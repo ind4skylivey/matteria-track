@@ -1,4 +1,4 @@
-# Homebrew formula for MateriaTrack
+# Homebrew formula for MatteriaTrack
 # Final Fantasy-themed CLI time tracker
 
 class Materiatrack < Formula
@@ -25,7 +25,7 @@ class Materiatrack < Formula
 
   def caveats
     <<~EOS
-      💎 MateriaTrack has been installed!
+      💎 MatteriaTrack has been installed!
 
       Quick start:
         mtrack track -p "Project" -t "Task"  # Start tracking

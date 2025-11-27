@@ -48,7 +48,7 @@ impl From<ExitStatus> for ExitCode {
 pub fn banner() -> &'static str {
     r#"
 ╔══════════════════════════════════════════════════════════════╗
-║  💎 MateriaTrack - Time Tracking Forged in Mako Energy 💎    ║
+║  💎 MatteriaTrack - Time Tracking Forged in Mako Energy 💎    ║
 ║     "Master your time, master your destiny"                   ║
 ╚══════════════════════════════════════════════════════════════╝
 "#
@@ -56,7 +56,7 @@ pub fn banner() -> &'static str {
 
 pub fn short_banner(theme: MateriaTheme) -> String {
     format!(
-        "{} MateriaTrack {} v{}",
+        "{} MatteriaTrack {} v{}",
         theme.icon(),
         icons::MATERIA,
         VERSION

@@ -1,4 +1,4 @@
-//! Data models for MateriaTrack
+//! Data models for MatteriaTrack
 
 use chrono::{DateTime, Duration, Local, Utc};
 use serde::{Deserialize, Serialize};

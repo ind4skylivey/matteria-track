@@ -1,4 +1,4 @@
-//! Theme and icons for MateriaTrack
+//! Theme and icons for MatteriaTrack
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MateriaTheme {

@@ -445,10 +445,10 @@ All 6 phases complete:
 # Initialize git repo
 git init
 git add .
-git commit -m "[FEAT] MateriaTrack v1.0.0 - Initial Release"
+git commit -m "[FEAT] MatteriaTrack v1.0.0 - Initial Release"
 
 # Create tag
-git tag -a v1.0.0 -m "MateriaTrack v1.0.0"
+git tag -a v1.0.0 -m "MatteriaTrack v1.0.0"
 
 # Push to GitHub
 git remote add origin git@github.com:ind4skylivey/matteria-track.git

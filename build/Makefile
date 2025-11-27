@@ -1,4 +1,4 @@
-# MateriaTrack Makefile
+# MatteriaTrack Makefile
 # "Forging time tracking tools in Mako Energy"
 
 CARGO := cargo
@@ -32,7 +32,7 @@ endif
 all: build
 
 help:
-	@echo "MateriaTrack v$(VERSION) Build System"
+	@echo "MatteriaTrack v$(VERSION) Build System"
 	@echo ""
 	@echo "Usage: make [target]"
 	@echo ""
@@ -68,11 +68,11 @@ help:
 	@echo "  MANDIR=$(MANDIR)"
 
 build:
-	@echo "Building MateriaTrack (debug)..."
+	@echo "Building MatteriaTrack (debug)..."
 	$(CARGO) build
 
 release:
-	@echo "Building MateriaTrack (release)..."
+	@echo "Building MatteriaTrack (release)..."
 	$(CARGO) build --release
 	@strip $(TARGET_DIR)/release/$(BINARY) 2>/dev/null || true
 	@echo "Binary: $(TARGET_DIR)/release/$(BINARY)"
@@ -111,7 +111,7 @@ doc:
 	$(CARGO) doc --no-deps --open
 
 install: release
-	@echo "Installing MateriaTrack to $(PREFIX)..."
+	@echo "Installing MatteriaTrack to $(PREFIX)..."
 	install -d $(DESTDIR)$(BINDIR)
 	install -m 755 $(TARGET_DIR)/release/$(BINARY) $(DESTDIR)$(BINDIR)/
 	@ln -sf $(BINDIR)/$(BINARY) $(DESTDIR)$(BINDIR)/mtrack 2>/dev/null || true
@@ -126,7 +126,7 @@ install: release
 	@echo "Run 'materiatrack --help' to get started"
 
 uninstall:
-	@echo "Uninstalling MateriaTrack..."
+	@echo "Uninstalling MatteriaTrack..."
 	rm -f $(DESTDIR)$(BINDIR)/$(BINARY)
 	rm -f $(DESTDIR)$(BINDIR)/mtrack
 	rm -f $(DESTDIR)$(MANDIR)/$(BINARY).1
@@ -169,7 +169,7 @@ clean:
 	@echo "Clean complete"
 
 version:
-	@echo "MateriaTrack v$(VERSION)"
+	@echo "MatteriaTrack v$(VERSION)"
 	@echo "Target: $(TARGET)"
 	@echo "Rust: $$(rustc --version)"
 	@echo "Cargo: $$(cargo --version)"

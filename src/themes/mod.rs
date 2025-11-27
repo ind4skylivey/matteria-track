@@ -1,4 +1,4 @@
-//! Theme system for MateriaTrack
+//! Theme system for MatteriaTrack
 //!
 //! Provides customizable Materia-themed color palettes and icons.
 

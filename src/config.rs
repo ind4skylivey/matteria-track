@@ -1,4 +1,4 @@
-//! Configuration management for MateriaTrack
+//! Configuration management for MatteriaTrack
 
 use crate::error::{ConfigError, Result};
 use crate::theme::MateriaTheme;

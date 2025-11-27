@@ -1,6 +1,6 @@
 # Integrations Guide
 
-MateriaTrack integrates with various tools to enhance your workflow.
+MatteriaTrack integrates with various tools to enhance your workflow.
 
 ## Git Integration
 
@@ -40,7 +40,7 @@ mtrack import --git --repo ~/other/repo
 
 ### How It Works
 
-1. When tracking finishes, MateriaTrack scans for commits
+1. When tracking finishes, MatteriaTrack scans for commits
 2. Commits within the tracking window are associated
 3. Commit messages become entry notes
 4. Author and hash are stored for reference
@@ -59,7 +59,7 @@ obsidian_path = "~/Documents/Obsidian/MyVault"
 
 ### Daily Note Format
 
-MateriaTrack uses this format in daily notes:
+MatteriaTrack uses this format in daily notes:
 
 ```markdown
 ## Time Tracking
@@ -203,7 +203,7 @@ mtrack import --zeit ~/.zeit.db --project "Work"
 
 ### Data Mapping
 
-| Zeit | MateriaTrack |
+| Zeit | MatteriaTrack |
 |------|--------------|
 | Project | Project |
 | Activity | Task |
@@ -268,7 +268,7 @@ long_break = 15
 
 ## API/Scripting
 
-Use MateriaTrack in scripts.
+Use MatteriaTrack in scripts.
 
 ### JSON Output
 

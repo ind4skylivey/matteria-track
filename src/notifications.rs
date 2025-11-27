@@ -1,4 +1,4 @@
-//! Desktop notifications for MateriaTrack
+//! Desktop notifications for MatteriaTrack
 //!
 //! Provides tracking reminders, daily summaries, and Pomodoro timer.
 
@@ -52,7 +52,7 @@ impl NotificationManager {
 
     pub fn send_tracking_started(&self, project: &str, task: &str) -> Result<()> {
         self.send(
-            "💎 MateriaTrack",
+            "💎 MatteriaTrack",
             &format!("Started tracking: {} > {}", project, task),
             Urgency::Normal,
         )
@@ -76,7 +76,7 @@ impl NotificationManager {
 
     pub fn send_idle_reminder(&self) -> Result<()> {
         self.send(
-            "💎 MateriaTrack",
+            "💎 MatteriaTrack",
             "You're not tracking anything. Start a session?",
             Urgency::Low,
         )
@@ -171,7 +171,7 @@ fn check_notify_send() -> bool {
 fn send_system_notification(title: &str, body: &str, urgency: Urgency) -> Result<()> {
     let result = Command::new("notify-send")
         .args([
-            "--app-name=MateriaTrack",
+            "--app-name=MatteriaTrack",
             "--icon=appointment-soon",
             &format!("--urgency={}", urgency.as_str()),
             title,

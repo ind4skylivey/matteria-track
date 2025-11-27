@@ -18,7 +18,7 @@ Recommends:     gnupg2
 Suggests:       libnotify
 
 %description
-MateriaTrack is a mystical, Final Fantasy-themed power user time tracking CLI
+MatteriaTrack is a mystical, Final Fantasy-themed power user time tracking CLI
 based on Zeit. Track your time with style, earn achievements, and master your
 productivity destiny.
 

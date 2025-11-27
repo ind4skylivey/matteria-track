@@ -1,4 +1,4 @@
-//! GPG-based encryption for MateriaTrack
+//! GPG-based encryption for MatteriaTrack
 //!
 //! Provides transparent encryption/decryption using GPG.
 

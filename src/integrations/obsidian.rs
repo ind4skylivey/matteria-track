@@ -1,4 +1,4 @@
-//! Obsidian integration for MateriaTrack
+//! Obsidian integration for MatteriaTrack
 //!
 //! Bidirectional sync with Obsidian daily notes.
 //! Exports time entries to markdown and imports time blocks from notes.
@@ -13,7 +13,7 @@ use std::path::{Path, PathBuf};
 
 use super::Integration;
 
-const MATERIATRACK_HEADER: &str = "## MateriaTrack";
+const MATERIATRACK_HEADER: &str = "## MatteriaTrack";
 const TIME_BLOCK_PATTERN: &str = r"- \[(\d{2}:\d{2})-(\d{2}:\d{2})\] (.+?) > (.+)";
 
 pub struct ObsidianIntegration {

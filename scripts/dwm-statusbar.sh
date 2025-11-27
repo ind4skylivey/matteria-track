@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================================
-# MateriaTrack DWM Statusbar Script
+# MatteriaTrack DWM Statusbar Script
 # ============================================================================
 # Displays current tracking status in DWM statusbar using xsetroot
 # 
@@ -71,7 +71,7 @@ parse_args() {
 check_dependencies() {
     if ! command -v "$MTRACK_BIN" &>/dev/null; then
         echo "Error: $MTRACK_BIN not found in PATH" >&2
-        echo "Install MateriaTrack or set MTRACK_BIN environment variable" >&2
+        echo "Install MatteriaTrack or set MTRACK_BIN environment variable" >&2
         exit 1
     fi
 

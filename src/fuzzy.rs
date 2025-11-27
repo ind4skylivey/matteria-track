@@ -1,4 +1,4 @@
-//! Fuzzy finder for MateriaTrack
+//! Fuzzy finder for MatteriaTrack
 //!
 //! Provides fuzzy matching for projects and tasks with frecency scoring.
 
@@ -390,14 +390,14 @@ mod tests {
         let finder = FuzzyFinder::new();
 
         let projects = vec![
-            Project::new("MateriaTrack"),
+            Project::new("MatteriaTrack"),
             Project::new("Another Project"),
             Project::new("Test"),
         ];
 
         let results = finder.find_projects("mat", &projects);
         assert!(!results.is_empty());
-        assert_eq!(results[0].item.name, "MateriaTrack");
+        assert_eq!(results[0].item.name, "MatteriaTrack");
     }
 
     #[test]

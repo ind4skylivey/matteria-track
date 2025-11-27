@@ -1,4 +1,4 @@
-//! Database management for MateriaTrack
+//! Database management for MatteriaTrack
 
 use crate::error::{DatabaseError, Result};
 use crate::models::{Entry, EntryId, EntryWithDetails, Project, ProjectId, Task, TaskId};

@@ -1,11 +1,12 @@
-//! CLI interface for MateriaTrack
+//! CLI interface for MatteriaTrack
 
 use crate::theme::icons;
 use clap::{Parser, Subcommand, ValueEnum};
+use clap_complete::Shell;
 
 const FF_BANNER: &str = r#"
 ╔══════════════════════════════════════════════════════════════╗
-║  💎 MateriaTrack - Time Tracking Forged in Mako Energy 💎    ║
+║  💎 MatteriaTrack - Time Tracking Forged in Mako Energy 💎    ║
 ║     "Master your time, master your destiny"                   ║
 ╚══════════════════════════════════════════════════════════════╝
 "#;
@@ -39,10 +40,10 @@ const AFTER_HELP: &str = r#"
 
 #[derive(Parser, Debug)]
 #[command(
-    name = "mtrack",
+    name = "materiatrack",
     author = "ind4skylivey",
     version,
-    about = "💎 MateriaTrack - Final Fantasy-themed time tracking CLI",
+    about = "💎 MatteriaTrack - Final Fantasy-themed time tracking CLI",
     long_about = FF_BANNER,
     after_help = AFTER_HELP,
     propagate_version = true
@@ -196,6 +197,17 @@ pub enum Commands {
     Config {
         #[command(subcommand)]
         command: ConfigCommands,
+    },
+
+    /// Generate shell completions (bash, zsh, fish)
+    Completions {
+        /// Target shell
+        #[arg(value_enum)]
+        shell: Shell,
+
+        /// Output directory (defaults to ./completions)
+        #[arg(short, long, default_value = "completions")]
+        out_dir: String,
     },
 
     /// 📤 Import data from Zeit or other trackers
