@@ -193,6 +193,7 @@ fn theme_class(theme: MateriaTheme) -> &'static str {
         MateriaTheme::Lightning => "lightning",
         MateriaTheme::Earth => "earth",
         MateriaTheme::Wind => "wind",
+        MateriaTheme::Bahamut => "bahamut",
     }
 }
 

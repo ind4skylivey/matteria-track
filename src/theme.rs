@@ -7,6 +7,7 @@ pub enum MateriaTheme {
     Lightning,
     Earth,
     Wind,
+    Bahamut,
 }
 
 impl std::str::FromStr for MateriaTheme {
@@ -19,6 +20,7 @@ impl std::str::FromStr for MateriaTheme {
             "lightning" => Ok(Self::Lightning),
             "earth" => Ok(Self::Earth),
             "wind" => Ok(Self::Wind),
+            "bahamut" => Ok(Self::Bahamut),
             _ => Err(()),
         }
     }
@@ -32,6 +34,7 @@ impl MateriaTheme {
             Self::Lightning => (255, 255, 100),
             Self::Earth => (139, 90, 43),
             Self::Wind => (150, 255, 150),
+            Self::Bahamut => (108, 52, 131), // Royal Purple
         }
     }
 
@@ -42,6 +45,7 @@ impl MateriaTheme {
             Self::Lightning => (255, 200, 50),
             Self::Earth => (100, 70, 30),
             Self::Wind => (100, 200, 100),
+            Self::Bahamut => (244, 208, 63), // Gold
         }
     }
 
@@ -52,6 +56,7 @@ impl MateriaTheme {
             Self::Lightning => "⚡",
             Self::Earth => "🌍",
             Self::Wind => "🌬️",
+            Self::Bahamut => "🐉",
         }
     }
 
