@@ -5,7 +5,7 @@ class Materiatrack < Formula
   desc "Mystical Final Fantasy-themed CLI time tracker based on Zeit"
   homepage "https://github.com/ind4skylivey/matteria-track"
   url "https://github.com/ind4skylivey/matteria-track/archive/refs/tags/v1.0.3.tar.gz"
-  sha256 "9958f84456b9cc9673d73fa1758866030f49ff277b6f7ca18e43c04199fe8096"
+  sha256 "8a51681613fcb885868d9e0c35c321c29c5660d0be2cc15811a4de6509874327"
   license "MIT"
   head "https://github.com/ind4skylivey/matteria-track.git", branch: "main"
 
