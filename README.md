@@ -12,9 +12,16 @@
 ```
 ╔══════════════════════════════════════════════════════════════╗
 ║  💎 MateriaTrack - Time Tracking Forged in Mako Energy 💎    ║
-║     "Master your time, master your destiny"                   ║
+║     "Master your time, master your destiny"                  ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
+
+## Why you’ll like it
+- ⚡ Fast: async, fuzzy finder, zero telemetry.
+- 🔐 Safe: optional GPG encryption + tamper-evident audit log.
+- 🔗 Connected: Git auto-import, Obsidian sync, statusbar output.
+- 🎨 Personal: 6 elemental themes + achievements.
+- 🧭 Portable: release binaries for Linux (glibc, musl) and macOS (Intel/ARM).
 
 ## Features
 
@@ -42,7 +49,7 @@
 curl -sSL https://raw.githubusercontent.com/ind4skylivey/matteria-track/main/build/install.sh | bash
 ```
 
-### Or via package manager
+### Or via package manager / binaries
 
 ```bash
 # Arch Linux (AUR)
@@ -50,6 +57,10 @@ yay -S materiatrack
 
 # Homebrew (macOS)
 brew install ind4skylivey/tap/materiatrack
+
+# Release binaries (no build)
+# Linux glibc (x86_64), Linux musl (x86_64), macOS Intel, macOS Apple Silicon
+# See Downloads section below for direct links/checksums
 ```
 
 ### Basic Usage
@@ -70,6 +81,20 @@ mtrack list
 # Statistics
 mtrack stats --today
 ```
+
+## Downloads
+
+Latest release binaries (v1.0.3):
+
+| Target | Asset |
+| ------ | ------ |
+| Linux x86_64 (glibc) | `materiatrack-1.0.3-x86_64-unknown-linux-gnu.tar.gz` |
+| Linux x86_64 (musl/static) | `materiatrack-1.0.3-x86_64-unknown-linux-musl.tar.gz` |
+| macOS x86_64 | `materiatrack-1.0.3-x86_64-apple-darwin.tar.gz` |
+| macOS ARM64 | `materiatrack-1.0.3-aarch64-apple-darwin.tar.gz` |
+| Checksums | `SHA256SUMS` |
+
+All assets live at the GitHub Release page: https://github.com/ind4skylivey/matteria-track/releases/tag/v1.0.3
 
 ## Demo
 
