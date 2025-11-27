@@ -53,9 +53,10 @@ jobs:
       - name: Configure musl toolchain env
         if: matrix.target == 'x86_64-unknown-linux-musl'
         run: |
-          echo "CC_x86_64_UNKNOWN_LINUX_MUSL=x86_64-linux-musl-gcc" >> $GITHUB_ENV
-          echo "CXX_x86_64_UNKNOWN_LINUX_MUSL=x86_64-linux-musl-gcc" >> $GITHUB_ENV
-          echo "AR_x86_64_UNKNOWN_LINUX_MUSL=x86_64-linux-musl-ar" >> $GITHUB_ENV
+          echo "CC=musl-gcc" >> $GITHUB_ENV
+          echo "CXX=musl-gcc" >> $GITHUB_ENV
+          echo "AR=ar" >> $GITHUB_ENV
+          echo "CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc" >> $GITHUB_ENV
           echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
 
       - name: Build
