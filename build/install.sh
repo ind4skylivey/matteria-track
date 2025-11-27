@@ -14,9 +14,9 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-log_info() { echo -e "${BLUE}[INFO]${NC} $*"; }
-log_success() { echo -e "${GREEN}[SUCCESS]${NC} $*"; }
-log_warn() { echo -e "${YELLOW}[WARN]${NC} $*"; }
+log_info() { echo -e "${BLUE}[INFO]${NC} $*" >&2; }
+log_success() { echo -e "${GREEN}[SUCCESS]${NC} $*" >&2; }
+log_warn() { echo -e "${YELLOW}[WARN]${NC} $*" >&2; }
 log_error() { echo -e "${RED}[ERROR]${NC} $*" >&2; }
 
 print_banner() {
@@ -119,9 +119,11 @@ resolve_version() {
         return
     fi
 
-    # Try GitHub API
-    local latest
-    if latest=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" | grep -m1 '"tag_name"' | cut -d':' -f2 | tr -d '", '); then
+    local latest json tags_html
+
+    # Try GitHub API (avoid pipefail issues)
+    if json=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest"); then
+        latest=$(echo "$json" | grep -m1 '"tag_name"' | cut -d':' -f2 | tr -d '", ')
         latest="${latest#v}"
         if [[ -n "$latest" ]]; then
             echo "$latest"
@@ -129,8 +131,9 @@ resolve_version() {
         fi
     fi
 
-    # Fallback: scrape tags page (last 50 tags)
-    if latest=$(curl -fsSL "https://github.com/${REPO}/tags" | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1); then
+    # Fallback: scrape tags page
+    if tags_html=$(curl -fsSL "https://github.com/${REPO}/tags"); then
+        latest=$(echo "$tags_html" | grep -Eo 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1)
         latest="${latest#v}"
         if [[ -n "$latest" ]]; then
             echo "$latest"
@@ -161,6 +164,8 @@ download_release() {
 
     local version
     version=$(resolve_version)
+
+    VERSION="$version"  # keep global in sync for later globbing
 
     local url="https://github.com/${REPO}/releases/download/v${version}/materiatrack-${version}-${target}.tar.gz"
     local tmp_dir
@@ -417,15 +422,24 @@ remote_install() {
     local tmp_dir
     tmp_dir=$(download_release "$os" "$arch")
     local extract_dir="$tmp_dir/materiatrack-${VERSION}-"*
+    local extracted=0
 
     for dir in $extract_dir; do
         if [[ -d "$dir" ]]; then
             install_binary "$dir/materiatrack" "$install_dir"
             install_man_page "$dir" "$man_dir"
             install_completions "$dir" "$shell"
+            extracted=1
             break
         fi
     done
+
+    if [[ $extracted -eq 0 ]]; then
+        # Flat archive case (no directory inside the tarball)
+        install_binary "$tmp_dir/materiatrack" "$install_dir"
+        install_man_page "$tmp_dir" "$man_dir"
+        install_completions "$tmp_dir" "$shell"
+    fi
 
     rm -rf "$tmp_dir"
 
