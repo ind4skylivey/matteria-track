@@ -51,6 +51,7 @@
 
 ### Shell Integration
 ![Prompt Integration](assets/prompt.png)
+> *Achieve the aesthetic shown above with [Iridex Prism](https://github.com/ind4skylivey/iridex-prism-terminal) - the recommended cyberpunk prompt for MatteriaTrack.*
 
 ## Quick Start
 
