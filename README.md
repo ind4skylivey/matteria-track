@@ -1,9 +1,9 @@
 # MatteriaTrack 💎
+<img width="1536" height="1024" alt="banner" src="https://github.com/user-attachments/assets/304ed59d-1fef-4b14-9fc0-90c9da6cfad9" />
 
 [![Release](https://img.shields.io/github/v/release/ind4skylivey/matteria-track?style=for-the-badge)](https://github.com/ind4skylivey/matteria-track/releases)
 [![Tests](https://img.shields.io/github/actions/workflow/status/ind4skylivey/matteria-track/ci.yml?style=for-the-badge&label=tests)](https://github.com/ind4skylivey/matteria-track/actions)
 [![License](https://img.shields.io/github/license/ind4skylivey/matteria-track?style=for-the-badge)](LICENSE)
-[![Crates.io](https://img.shields.io/crates/v/materiatrack?style=for-the-badge)](https://crates.io/crates/materiatrack)
 
 > **Mystical Final Fantasy-themed CLI time tracker for power users**
 
