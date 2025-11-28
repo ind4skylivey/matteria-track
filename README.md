@@ -41,6 +41,17 @@
 
 🔍 **Fuzzy Finder** - Quick project/task switching
 
+## Gallery
+
+### Terminal Interface
+![Terminal Workflow](assets/terminal.png)
+
+### Interactive Dashboard
+![TUI Dashboard](assets/ui.png)
+
+### Shell Integration
+![Prompt Integration](assets/prompt.png)
+
 ## Quick Start
 
 ### Install
