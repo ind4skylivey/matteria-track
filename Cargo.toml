@@ -1,6 +1,6 @@
 [package]
 name = "materiatrack"
-version = "1.0.5"
+version = "1.0.6"
 edition = "2021"
 rust-version = "1.70"
 authors = ["ind4skylivey"]
