@@ -402,16 +402,12 @@ impl CalendarTui {
             .iter()
             .map(|event| {
                 let time_str = event.time.as_deref().unwrap_or("--:--");
-                let content = format!(
-                    "{} {} - {}",
-                    if event.date == Local::now().naive_local().date() {
-                        "Hoy"
-                    } else {
-                        &event.date.format("%d/%m").to_string()
-                    },
-                    time_str,
-                    event.title
-                );
+                let date_str = if event.date == Local::now().naive_local().date() {
+                    "Hoy".to_string()
+                } else {
+                    event.date.format("%d/%m").to_string()
+                };
+                let content = format!("{} {} - {}", date_str, time_str, event.title);
                 ListItem::new(content)
             })
             .collect();
