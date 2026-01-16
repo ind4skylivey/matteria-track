@@ -12,7 +12,7 @@ use crossterm::{
 };
 use ratatui::{
     backend::CrosstermBackend,
-    layout::{Alignment, Constraint, Direction, Layout, Rect},
+    layout::{Alignment, Constraint, Direction, Layout, Position, Rect},
     style::{Color, Modifier, Style},
     text::{Line, Span},
     widgets::{Block, Borders, Clear, List, ListItem, Paragraph},
@@ -191,7 +191,7 @@ impl CalendarTui {
     }
 
     fn render(&self, frame: &mut Frame) {
-        let size = frame.size();
+        let size = frame.area();
 
         // Main layout
         let chunks = Layout::default()
@@ -498,7 +498,7 @@ impl CalendarTui {
     }
 
     fn render_input_popup(&self, frame: &mut Frame) {
-        let area = frame.size();
+        let area = frame.area();
 
         // Center the popup
         let popup_layout = Layout::default()
@@ -536,14 +536,14 @@ impl CalendarTui {
         frame.render_widget(input, popup_area);
 
         // Set cursor position
-        frame.set_cursor(
+        frame.set_cursor_position(Position::new(
             popup_area.x + self.calendar.input_buffer.len() as u16 + 1,
             popup_area.y + 1,
-        );
+        ));
     }
 
     fn render_delete_popup(&self, frame: &mut Frame) {
-        let area = frame.size();
+        let area = frame.area();
 
         // Center the popup
         let popup_layout = Layout::default()

@@ -159,7 +159,7 @@ fn ui(f: &mut Frame, app: &App) {
             Constraint::Min(10),
             Constraint::Length(3),
         ])
-        .split(f.size());
+        .split(f.area());
 
     draw_header(f, app, chunks[0], primary);
     draw_status(f, app, chunks[1], primary, secondary);
