@@ -179,7 +179,6 @@ pub enum Commands {
     },
 
     /// 🖥️ Output for DWM/i3 statusbar
-    /// 🖥️ Output for DWM/i3 statusbar
     Statusbar {
         /// Output format (dwm, polybar, waybar, i3blocks)
         #[arg(short, long, default_value = "dwm")]
