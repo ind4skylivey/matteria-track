@@ -1,8 +1,6 @@
 # MatteriaTrack 💎
 
-<p align="center">
-  <img src="assets/preview.png" alt="MatteriaTrack Preview" width="800"/>
-</p>
+<img width="1536" height="1024" alt="banner" src="https://github.com/user-attachments/assets/304ed59d-1fef-4b14-9fc0-90c9da6cfad9" />
 
 [![Release](https://img.shields.io/github/v/release/ind4skylivey/matteria-track?style=for-the-badge)](https://github.com/ind4skylivey/matteria-track/releases)
 [![Tests](https://img.shields.io/github/actions/workflow/status/ind4skylivey/matteria-track/ci.yml?style=for-the-badge&label=tests)](https://github.com/ind4skylivey/matteria-track/actions)
