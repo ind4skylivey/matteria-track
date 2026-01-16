@@ -12,7 +12,7 @@ use crossterm::{
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use ratatui::{
-    backend::{Backend, CrosstermBackend},
+    backend::CrosstermBackend,
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Modifier, Style},
     text::{Line, Span},
@@ -148,7 +148,7 @@ fn run_app<B: ratatui::backend::Backend>(terminal: &mut Terminal<B>, app: &mut A
     }
 }
 
-fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
+fn ui(f: &mut Frame, app: &App) {
     let (primary, secondary) = app.theme_colors();
 
     let chunks = Layout::default()
@@ -175,7 +175,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &App) {
     draw_footer(f, app, chunks[3], primary);
 }
 
-fn draw_header<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color) {
+fn draw_header(f: &mut Frame, app: &App, area: Rect, primary: Color) {
     let titles = vec!["📋 Entries", "🏆 Projects", "📊 Stats", "❓ Help"];
     let tabs = Tabs::new(titles)
         .block(
@@ -190,13 +190,7 @@ fn draw_header<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Col
     f.render_widget(tabs, area);
 }
 
-fn draw_status<B: Backend>(
-    f: &mut Frame<B>,
-    app: &App,
-    area: Rect,
-    primary: Color,
-    secondary: Color,
-) {
+fn draw_status(f: &mut Frame, app: &App, area: Rect, primary: Color, secondary: Color) {
     let block = Block::default()
         .borders(Borders::ALL)
         .title(" ⚔️ Active Tracking ");
@@ -259,7 +253,7 @@ fn draw_status<B: Backend>(
     }
 }
 
-fn draw_entries<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color) {
+fn draw_entries(f: &mut Frame, app: &App, area: Rect, primary: Color) {
     let header_cells = ["Date", "Project", "Task", "Duration", "Status"]
         .iter()
         .map(|h| Cell::from(*h).style(Style::default().fg(primary).add_modifier(Modifier::BOLD)));
@@ -296,25 +290,24 @@ fn draw_entries<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Co
         })
         .collect();
 
-    let table = Table::new(rows)
-        .header(header)
-        .block(
-            Block::default()
-                .borders(Borders::ALL)
-                .title(format!(" 📋 Recent Entries ({}) ", app.entries.len())),
-        )
-        .widths(&[
-            Constraint::Length(12),
-            Constraint::Length(15),
-            Constraint::Length(20),
-            Constraint::Length(12),
-            Constraint::Length(10),
-        ]);
+    let widths = [
+        Constraint::Length(12),
+        Constraint::Length(15),
+        Constraint::Length(20),
+        Constraint::Length(12),
+        Constraint::Length(10),
+    ];
+
+    let table = Table::new(rows, widths).header(header).block(
+        Block::default()
+            .borders(Borders::ALL)
+            .title(format!(" 📋 Recent Entries ({}) ", app.entries.len())),
+    );
 
     f.render_widget(table, area);
 }
 
-fn draw_projects<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color) {
+fn draw_projects(f: &mut Frame, app: &App, area: Rect, primary: Color) {
     let items: Vec<ListItem> = app
         .projects
         .iter()
@@ -346,7 +339,7 @@ fn draw_projects<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: C
     f.render_widget(list, area);
 }
 
-fn draw_stats<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color) {
+fn draw_stats(f: &mut Frame, app: &App, area: Rect, primary: Color) {
     let text = vec![
         Line::from(vec![Span::styled(
             "📊 Statistics Panel",
@@ -377,7 +370,7 @@ fn draw_stats<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Colo
     f.render_widget(paragraph, area);
 }
 
-fn draw_help<B: Backend>(f: &mut Frame<B>, _app: &App, area: Rect, primary: Color) {
+fn draw_help(f: &mut Frame, _app: &App, area: Rect, primary: Color) {
     let help_text = vec![
         Line::from(vec![Span::styled(
             "⌨️  Keyboard Shortcuts",
@@ -423,7 +416,7 @@ fn draw_help<B: Backend>(f: &mut Frame<B>, _app: &App, area: Rect, primary: Colo
     f.render_widget(paragraph, area);
 }
 
-fn draw_footer<B: Backend>(f: &mut Frame<B>, app: &App, area: Rect, primary: Color) {
+fn draw_footer(f: &mut Frame, app: &App, area: Rect, primary: Color) {
     let now = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
     let footer = Paragraph::new(Line::from(vec![
         Span::styled(" 💎 ", Style::default()),
