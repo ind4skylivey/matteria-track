@@ -7,5 +7,5 @@ pub mod model;
 pub mod tui;
 
 pub use events::{CalendarEvent, CalendarEventType, EventStore};
-pub use model::{Calendar, CalendarView};
+pub use model::Calendar;
 pub use tui::CalendarTui;

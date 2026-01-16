@@ -285,7 +285,7 @@ impl CalendarTui {
             .split(inner);
 
         // Weekday header
-        let weekdays = vec!["L", "M", "X", "J", "V", "S", "D"];
+        let weekdays = ["L", "M", "X", "J", "V", "S", "D"];
         let header_spans: Vec<Span> = weekdays
             .iter()
             .map(|d| {
