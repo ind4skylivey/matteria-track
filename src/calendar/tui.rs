@@ -285,7 +285,7 @@ impl CalendarTui {
             .split(inner);
 
         // Weekday header
-        let weekdays = ["L", "M", "X", "J", "V", "S", "D"];
+        let weekdays = ["M", "T", "W", "T", "F", "S", "S"];
         let header_spans: Vec<Span> = weekdays
             .iter()
             .map(|d| {
@@ -369,15 +369,15 @@ impl CalendarTui {
         // Stats block
         let stats_content = vec![
             Line::from(vec![
-                Span::styled("Mes: ", Style::default().add_modifier(Modifier::BOLD)),
+                Span::styled("Month: ", Style::default().add_modifier(Modifier::BOLD)),
                 Span::raw(format!(
-                    "{} eventos",
+                    "{} events",
                     self.calendar.total_events_this_month()
                 )),
             ]),
             Line::from(vec![
-                Span::styled("Racha: ", Style::default().add_modifier(Modifier::BOLD)),
-                Span::raw(format!("{} días", self.calendar.current_streak())),
+                Span::styled("Streak: ", Style::default().add_modifier(Modifier::BOLD)),
+                Span::raw(format!("{} days", self.calendar.current_streak())),
             ]),
             Line::from(vec![
                 Span::styled("Total: ", Style::default().add_modifier(Modifier::BOLD)),
@@ -389,7 +389,7 @@ impl CalendarTui {
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .title(" Estadísticas ")
+                    .title(" Statistics ")
                     .border_style(Style::default().fg(Color::Rgb(r, g, b))),
             )
             .alignment(Alignment::Left);
@@ -403,7 +403,7 @@ impl CalendarTui {
             .map(|event| {
                 let time_str = event.time.as_deref().unwrap_or("--:--");
                 let date_str = if event.date == Local::now().naive_local().date() {
-                    "Hoy".to_string()
+                    "Today".to_string()
                 } else {
                     event.date.format("%d/%m").to_string()
                 };
@@ -415,7 +415,7 @@ impl CalendarTui {
         let events_list = List::new(event_items).block(
             Block::default()
                 .borders(Borders::ALL)
-                .title(" Próximos eventos ")
+                .title(" Upcoming Events ")
                 .border_style(Style::default().fg(Color::Rgb(r, g, b))),
         );
 
@@ -428,17 +428,17 @@ impl CalendarTui {
         let help_text = vec![
             Line::from(""),
             Line::from(vec![Span::styled(
-                "Navegación:",
+                "Navigation:",
                 Style::default()
                     .add_modifier(Modifier::BOLD)
                     .fg(Color::Rgb(r, g, b)),
             )]),
-            Line::from("  ←/→ o a/d    - Día anterior/siguiente"),
-            Line::from("  ↑/↓ o w/s    - Semana anterior/siguiente"),
-            Line::from("  [ / ]        - Mes anterior/siguiente"),
-            Line::from("  t o H        - Ir a hoy"),
-            Line::from("  e / Enter    - Agregar evento"),
-            Line::from("  x / Delete   - Eliminar evento"),
+            Line::from("  ←/→ or a/d   - Previous/Next Day"),
+            Line::from("  ↑/↓ or w/s   - Previous/Next Week"),
+            Line::from("  [ / ]        - Previous/Next Month"),
+            Line::from("  t or H       - Go to Today"),
+            Line::from("  e / Enter    - Add Event"),
+            Line::from("  x / Delete   - Delete Event"),
             Line::from(""),
             Line::from(vec![Span::styled(
                 "General:",
@@ -446,11 +446,11 @@ impl CalendarTui {
                     .add_modifier(Modifier::BOLD)
                     .fg(Color::Rgb(r, g, b)),
             )]),
-            Line::from("  h            - Mostrar/ocultar ayuda"),
-            Line::from("  q            - Salir"),
+            Line::from("  h            - Show/Hide Help"),
+            Line::from("  q            - Quit"),
             Line::from(""),
             Line::from(vec![Span::styled(
-                "Leyenda:",
+                "Legend:",
                 Style::default()
                     .add_modifier(Modifier::BOLD)
                     .fg(Color::Rgb(r, g, b)),
@@ -461,12 +461,12 @@ impl CalendarTui {
                     "##",
                     Style::default().bg(Color::Rgb(r, g, b)).fg(Color::Black),
                 ),
-                Span::raw(" - Día seleccionado"),
+                Span::raw(" - Selected Day"),
             ]),
             Line::from(vec![
                 Span::raw("  "),
                 Span::styled("##", Style::default().fg(Color::Rgb(r, g, b))),
-                Span::raw(" - Día con eventos"),
+                Span::raw(" - Day with Events"),
             ]),
         ];
 
@@ -474,7 +474,7 @@ impl CalendarTui {
             .block(
                 Block::default()
                     .borders(Borders::ALL)
-                    .title(" Ayuda ")
+                    .title(" Help ")
                     .border_style(Style::default().fg(Color::Rgb(r, g, b))),
             )
             .alignment(Alignment::Left);
@@ -485,7 +485,7 @@ impl CalendarTui {
     fn render_footer(&self, frame: &mut Frame, area: Rect) {
         let (r, g, b) = self.theme.primary_color();
 
-        let footer_text = " ◄─ Navegación: Flechas │ h = Ayuda │ q = Salir ";
+        let footer_text = " ◄─ Navigation: Arrows │ h = Help │ q = Quit ";
         let footer = Paragraph::new(footer_text)
             .style(Style::default().fg(Color::Rgb(r, g, b)))
             .alignment(Alignment::Center);

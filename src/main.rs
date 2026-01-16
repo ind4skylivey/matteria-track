@@ -512,6 +512,33 @@ async fn run() -> Result<()> {
             }
         },
 
+        Commands::Achievements { code } => {
+            let mut checker = achievements::AchievementChecker::new()?;
+
+            if let Some(c) = code {
+                if let Some(msg) = achievements::trigger_easter_egg(&c) {
+                    println!("{}", msg.bright_green());
+                    if let Some(a) = checker.check_secret_code(&c) {
+                        println!("{}", achievements::format_achievement_unlocked(a));
+                    }
+                    return Ok(());
+                } else {
+                    println!("{}", "Invalid code.".red());
+                    return Ok(());
+                }
+            }
+
+            let new_unlocks = checker.check_and_unlock(engine.db())?;
+            for achievement in new_unlocks {
+                println!("{}", achievements::format_achievement_unlocked(achievement));
+            }
+
+            println!(
+                "{}",
+                achievements::format_achievements_list(checker.progress())
+            );
+        }
+
         Commands::Import { zeit, json } => {
             if let Some(path) = zeit {
                 let importer = integrations::zeit::ZeitImporter::new()

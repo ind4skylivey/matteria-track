@@ -203,6 +203,13 @@ pub enum Commands {
         command: ConfigCommands,
     },
 
+    /// 🏆 Show unlocked achievements
+    Achievements {
+        /// 🎮 Enter a secret code
+        #[arg(long)]
+        code: Option<String>,
+    },
+
     /// Generate shell completions (bash, zsh, fish)
     Completions {
         /// Target shell

@@ -4,7 +4,7 @@
 
 use crate::database::Database;
 use crate::error::Result;
-use chrono::{DateTime, Local, Timelike, Utc};
+use chrono::{DateTime, Datelike, Local, Timelike, Utc};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fs;
@@ -181,6 +181,42 @@ pub static ACHIEVEMENTS: &[Achievement] = &[
         points: 50,
         secret: false,
         category: AchievementCategory::Tracking,
+    },
+    Achievement {
+        id: "night_owl",
+        name: "Night Owl",
+        description: "Track time between 2 AM and 5 AM",
+        icon: "🦉",
+        points: 20,
+        secret: false,
+        category: AchievementCategory::Special,
+    },
+    Achievement {
+        id: "weekend_warrior",
+        name: "Weekend Warrior",
+        description: "Track time on a weekend",
+        icon: "🌴",
+        points: 15,
+        secret: false,
+        category: AchievementCategory::Dedication,
+    },
+    Achievement {
+        id: "multitasker",
+        name: "Multitasker",
+        description: "Switch tasks 10 times in a single day",
+        icon: "🤹",
+        points: 30,
+        secret: false,
+        category: AchievementCategory::Tracking,
+    },
+    Achievement {
+        id: "over_9000",
+        name: "It's Over 9000!",
+        description: "Track over 9000 minutes total",
+        icon: "🔥",
+        points: 90,
+        secret: false,
+        category: AchievementCategory::Milestones,
     },
     // Secret achievements
     Achievement {
@@ -414,6 +450,26 @@ impl AchievementChecker {
             }
         }
 
+        if !self.progress.is_unlocked("over_9000") && self.progress.total_hours * 60.0 >= 9000.0 {
+            if let Some(a) = self.progress.unlock("over_9000") {
+                newly_unlocked.push(a);
+            }
+        }
+
+        // Check multitasker (10+ entries today)
+        let today = Local::now().date_naive();
+        let entries = db.list_entries(None)?;
+        let today_count = entries
+            .iter()
+            .filter(|e| e.start.with_timezone(&Local).date_naive() == today)
+            .count();
+
+        if !self.progress.is_unlocked("multitasker") && today_count >= 10 {
+            if let Some(a) = self.progress.unlock("multitasker") {
+                newly_unlocked.push(a);
+            }
+        }
+
         // Check if all non-secret achievements unlocked for Knights of the Round
         let non_secret_count = ACHIEVEMENTS.iter().filter(|a| !a.secret).count();
         let unlocked_non_secret = self
@@ -500,6 +556,21 @@ impl AchievementChecker {
 
         if !self.progress.is_unlocked("early_bird") && hour < 6 {
             if let Some(a) = self.progress.unlock("early_bird") {
+                unlocked.push(a);
+            }
+        }
+
+        if !self.progress.is_unlocked("night_owl") && (2..5).contains(&hour) {
+            if let Some(a) = self.progress.unlock("night_owl") {
+                unlocked.push(a);
+            }
+        }
+
+        let weekday = local_time.weekday();
+        if !self.progress.is_unlocked("weekend_warrior")
+            && (weekday == chrono::Weekday::Sat || weekday == chrono::Weekday::Sun)
+        {
+            if let Some(a) = self.progress.unlock("weekend_warrior") {
                 unlocked.push(a);
             }
         }
@@ -677,7 +748,7 @@ mod tests {
 
     #[test]
     fn test_achievement_count() {
-        assert_eq!(ACHIEVEMENTS.len(), 20);
+        assert_eq!(ACHIEVEMENTS.len(), 24);
     }
 
     #[test]

@@ -65,7 +65,7 @@ _"Master your time, master your destiny"_
 ### Install
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/ind4skylivey/matteria-track/main/build/install.sh | bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/ind4skylivey/matteria-track/releases/latest/download/materiatrack-installer.sh | sh
 ```
 
 ### Or via package manager / binaries
