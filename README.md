@@ -51,7 +51,7 @@ _"Master your time, master your destiny"_
 ## Showcase
 
 <p align="center">
-  <img src="assets/showcase.gif" alt="MatteriaTrack Demo" width="800"/>
+  <img src="assets/showcase.gif" alt="MatteriaTrack Showcase Demo" width="800"/>
 </p>
 
 ## Quick Start
