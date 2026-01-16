@@ -48,8 +48,16 @@ _"Master your time, master your destiny"_
 
 ## Showcase
 
+### Time Tracking & Dashboard
+
 <p align="center">
   <img src="assets/showcase.gif" alt="MatteriaTrack Showcase Demo" width="800"/>
+</p>
+
+### Interactive Calendar
+
+<p align="center">
+  <img src="assets/calendar.gif" alt="MatteriaTrack Calendar Demo" width="800"/>
 </p>
 
 ## Quick Start
