@@ -3,6 +3,7 @@
 #![allow(dead_code)]
 
 mod achievements;
+mod calendar;
 mod cli;
 mod config;
 mod database;
@@ -610,6 +611,73 @@ async fn run() -> Result<()> {
                 println!("╚══════════════════════════════════════╝\n");
             }
         },
+
+        Commands::Calendar {
+            theme: theme_name,
+            add,
+            date,
+        } => {
+            use calendar::{Calendar, CalendarEvent, CalendarEventType, CalendarTui, EventStore};
+            use chrono::NaiveDate;
+
+            // Get events file path
+            let events_path = Config::config_dir()?.join("events.json");
+            let mut event_store = EventStore::new(events_path);
+            event_store.load()?;
+
+            // If add flag is set, add event and return
+            if let Some(event_title) = add {
+                let event_date = if let Some(date_str) = date {
+                    NaiveDate::parse_from_str(&date_str, "%Y-%m-%d").map_err(|_| {
+                        error::Error::InvalidInput(
+                            "Invalid date format. Use YYYY-MM-DD".to_string(),
+                        )
+                    })?
+                } else {
+                    Local::now().naive_local().date()
+                };
+
+                let event = CalendarEvent::new(event_title, event_date)
+                    .with_type(CalendarEventType::Custom);
+
+                event_store.add_event(event)?;
+                print_success(&format!("Added event on {}", event_date));
+                return Ok(());
+            }
+
+            // Load tracking events from database
+            let entries = engine.db().list_entries_with_details(None)?;
+            for entry in entries.iter().take(100) {
+                let date = entry.entry.start_local().date_naive();
+                let time = entry.entry.start_local().format("%H:%M").to_string();
+                let title = format!("{} → {}", entry.project_name, entry.task_name);
+
+                let event = CalendarEvent::tracking_session(title, date, time);
+
+                // Check if similar event already exists to avoid duplicates
+                let existing = event_store.get_by_date(date);
+                if !existing
+                    .iter()
+                    .any(|e| e.title == event.title && e.time == event.time)
+                {
+                    let _ = event_store.add_event(event);
+                }
+            }
+
+            // Determine which theme to use
+            let calendar_theme = if let Some(name) = theme_name {
+                name.parse().unwrap_or(theme)
+            } else {
+                theme
+            };
+
+            // Create calendar with events
+            let calendar = Calendar::new().with_events(event_store.get_all().to_vec());
+            let mut tui = CalendarTui::new(calendar, calendar_theme, Some(event_store));
+
+            // Run the TUI
+            tui.run()?;
+        }
 
         Commands::Completions { .. } => unreachable!("handled before config is loaded"),
     }

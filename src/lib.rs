@@ -5,6 +5,7 @@
 #![allow(dead_code)]
 
 pub mod achievements;
+pub mod calendar;
 pub mod cli;
 pub mod config;
 pub mod database;

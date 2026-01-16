@@ -20,7 +20,7 @@ const AFTER_HELP: &str = r#"
   mtrack finish                          Complete current session
   mtrack status                          Show active tracking
 
-✨ LISTING MATERIA  
+✨ LISTING MATERIA
   mtrack list                            Show recent entries
   mtrack list --since "2024-01-01"       Filter by date
   mtrack list --total                    Show time totals
@@ -240,6 +240,22 @@ pub enum Commands {
     Theme {
         #[command(subcommand)]
         command: ThemeCommands,
+    },
+
+    /// 📅 Open interactive calendar TUI
+    #[command(visible_alias = "cal")]
+    Calendar {
+        /// Theme for calendar view
+        #[arg(short, long)]
+        theme: Option<String>,
+
+        /// Add a new event
+        #[arg(long)]
+        add: Option<String>,
+
+        /// Date for the event (YYYY-MM-DD)
+        #[arg(long)]
+        date: Option<String>,
     },
 }
 
