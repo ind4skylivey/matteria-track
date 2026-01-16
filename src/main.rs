@@ -425,16 +425,45 @@ async fn run() -> Result<()> {
             }
         }
 
-        Commands::Statusbar { short, icon } => {
+        Commands::Statusbar {
+            format,
+            short,
+            icon,
+        } => {
             if let Some((entry, proj, tsk)) = engine.get_status()? {
                 let secs = entry.duration().num_seconds();
-                println!(
-                    "{}",
-                    tracking::statusbar_output(&proj.name, &tsk.name, secs, short, icon.as_deref())
-                );
+
+                let integration = integrations::dwm::DwmIntegration::new().with_theme(theme);
+
+                let output = match format.as_str() {
+                    "polybar" => integration.format_polybar(&proj.name, &tsk.name, secs),
+                    "waybar" => {
+                        let json = integration.format_waybar(&proj.name, &tsk.name, secs);
+                        serde_json::to_string(&json)?
+                    }
+                    "i3blocks" | "i3" => integration.format_i3blocks(&proj.name, &tsk.name, secs),
+                    "tmux" => integration.format_tmux(&proj.name, &tsk.name, secs),
+                    "lemonbar" => integration.format_lemonbar(&proj.name, &tsk.name, secs),
+                    _ => tracking::statusbar_output(
+                        &proj.name,
+                        &tsk.name,
+                        secs,
+                        short,
+                        icon.as_deref(),
+                    ),
+                };
+
+                println!("{}", output);
             } else {
-                let icon = icon.as_deref().unwrap_or("💎");
-                println!("{} idle", icon);
+                match format.as_str() {
+                    "waybar" => {
+                        println!("{{ \"text\": \"💎 idle\", \"class\": \"idle\" }}");
+                    }
+                    _ => {
+                        let icon = icon.as_deref().unwrap_or("💎");
+                        println!("{} idle", icon);
+                    }
+                }
             }
         }
 
