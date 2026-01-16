@@ -1,5 +1,8 @@
 # MatteriaTrack 💎
-<img width="1536" height="1024" alt="banner" src="https://github.com/user-attachments/assets/304ed59d-1fef-4b14-9fc0-90c9da6cfad9" />
+
+<p align="center">
+  <img src="assets/preview.png" alt="MatteriaTrack Preview" width="800"/>
+</p>
 
 [![Release](https://img.shields.io/github/v/release/ind4skylivey/matteria-track?style=for-the-badge)](https://github.com/ind4skylivey/matteria-track/releases)
 [![Tests](https://img.shields.io/github/actions/workflow/status/ind4skylivey/matteria-track/ci.yml?style=for-the-badge&label=tests)](https://github.com/ind4skylivey/matteria-track/actions)
@@ -7,7 +10,7 @@
 
 > **Mystical Final Fantasy-themed CLI time tracker for power users**
 
-*"Master your time, master your destiny"*
+_"Master your time, master your destiny"_
 
 ```
 ╔══════════════════════════════════════════════════════════════╗
@@ -16,11 +19,13 @@
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
-## Why you’ll like it
+## Why you'll like it
+
 - ⚡ Fast: async, fuzzy finder, zero telemetry.
 - 🔐 Safe: optional GPG encryption + tamper-evident audit log.
 - 🔗 Connected: Git auto-import, Obsidian sync, statusbar output.
 - 🎨 Personal: 6 elemental themes + achievements.
+- 📅 Calendar TUI: Interactive calendar with event management.
 - 🧭 Portable: release binaries for Linux (glibc, musl) and macOS (Intel/ARM).
 
 ## Features
@@ -30,6 +35,8 @@
 ⚔️ **Git Integration** - Auto-import commits as time entries
 
 📓 **Obsidian Sync** - Bidirectional daily notes synchronization
+
+📅 **Calendar TUI** - Interactive calendar with event management
 
 🏆 **20+ Achievements** - Unlock rewards as you track
 
@@ -41,17 +48,11 @@
 
 🔍 **Fuzzy Finder** - Quick project/task switching
 
-## Gallery
+## Showcase
 
-### Terminal Interface
-![Terminal Workflow](assets/terminal.png)
-
-### Interactive Dashboard
-![TUI Dashboard](assets/ui.png)
-
-### Shell Integration
-![Prompt Integration](assets/prompt.png)
-> *Achieve the aesthetic shown above with [Iridex Prism](https://github.com/ind4skylivey/iridex-prism-terminal) - the recommended cyberpunk prompt for MatteriaTrack.*
+<p align="center">
+  <img src="assets/showcase.gif" alt="MatteriaTrack Demo" width="800"/>
+</p>
 
 ## Quick Start
 
@@ -98,13 +99,13 @@ mtrack stats --today
 
 Latest release binaries (v1.0.3):
 
-| Target | Asset |
-| ------ | ------ |
-| Linux x86_64 (glibc) | `materiatrack-1.0.3-x86_64-unknown-linux-gnu.tar.gz` |
+| Target                     | Asset                                                 |
+| -------------------------- | ----------------------------------------------------- |
+| Linux x86_64 (glibc)       | `materiatrack-1.0.3-x86_64-unknown-linux-gnu.tar.gz`  |
 | Linux x86_64 (musl/static) | `materiatrack-1.0.3-x86_64-unknown-linux-musl.tar.gz` |
-| macOS x86_64 | `materiatrack-1.0.3-x86_64-apple-darwin.tar.gz` |
-| macOS ARM64 | `materiatrack-1.0.3-aarch64-apple-darwin.tar.gz` |
-| Checksums | `SHA256SUMS` |
+| macOS x86_64               | `materiatrack-1.0.3-x86_64-apple-darwin.tar.gz`       |
+| macOS ARM64                | `materiatrack-1.0.3-aarch64-apple-darwin.tar.gz`      |
+| Checksums                  | `SHA256SUMS`                                          |
 
 All assets live at the GitHub Release page: https://github.com/ind4skylivey/matteria-track/releases/tag/v1.0.3
 
@@ -136,14 +137,14 @@ $ mtrack finish
 
 Choose your elemental Materia:
 
-| Theme | Description | Preview |
-|-------|-------------|---------|
-| 🔥 Fire | Burning passion | Red/Orange |
-| ❄️ Ice | Cool precision | Blue/Cyan |
-| ⚡ Lightning | Electric energy | Yellow/Purple |
-| 🌍 Earth | Grounded strength | Green/Brown |
-| 💨 Wind | Ethereal freedom | White/Gray |
-| 🐉 Bahamut | Ultimate power | Purple/Gold |
+| Theme        | Description       | Preview       |
+| ------------ | ----------------- | ------------- |
+| 🔥 Fire      | Burning passion   | Red/Orange    |
+| ❄️ Ice       | Cool precision    | Blue/Cyan     |
+| ⚡ Lightning | Electric energy   | Yellow/Purple |
+| 🌍 Earth     | Grounded strength | Green/Brown   |
+| 💨 Wind      | Ethereal freedom  | White/Gray    |
+| 🐉 Bahamut   | Ultimate power    | Purple/Gold   |
 
 ```bash
 # Set theme in config
@@ -190,7 +191,7 @@ Unlock achievements as you master time tracking:
 - ⚡ **Limit Break** - 500 hours tracked
 - 📅 **Week Warrior** - 7 day streak
 - 🏅 **SOLDIER 1st Class** - 100 day streak
-- 🎮 **???** - *Secret achievement*
+- 🎮 **???** - _Secret achievement_
 
 ```bash
 mtrack achievements
@@ -204,24 +205,26 @@ mtrack achievements
 - [Integrations](docs/INTEGRATIONS.md)
 - [Themes](docs/THEMES.md)
 - [Achievements](docs/ACHIEVEMENTS.md)
+- [Calendar TUI](docs/calendar-tui.md)
 - [Contributing](docs/CONTRIBUTING.md)
 
 ## Command Reference
 
-| Command | Alias | Description | Key Options |
-|---------|-------|-------------|-------------|
-| `track` | `t` | Start tracking | `-p`, `-t`, `--begin`, `-n` |
-| `finish` | `f` | Stop tracking | `-n`, `--end` |
-| `status` | `s` | Show current status | |
-| `list` | `l` | List entries | `--since`, `--limit`, `--total` |
-| `stats` | | Statistics | `--today`, `--week`, `--by-project` |
-| `project` | | Manage projects | `add`, `list`, `update`, `remove` |
-| `task` | | Manage tasks | `add`, `list`, `update`, `remove` |
-| `dashboard` | `ui` | TUI Dashboard | |
-| `statusbar` | | Statusbar output | `--format` |
-| `config` | | Manage config | `edit`, `show`, `set` |
-| `import` | | Import data | `--zeit`, `--json` |
-| `export` | | Export data | `--format`, `--output` |
+| Command     | Alias | Description         | Key Options                         |
+| ----------- | ----- | ------------------- | ----------------------------------- |
+| `track`     | `t`   | Start tracking      | `-p`, `-t`, `--begin`, `-n`         |
+| `finish`    | `f`   | Stop tracking       | `-n`, `--end`                       |
+| `status`    | `s`   | Show current status |                                     |
+| `list`      | `l`   | List entries        | `--since`, `--limit`, `--total`     |
+| `stats`     |       | Statistics          | `--today`, `--week`, `--by-project` |
+| `project`   |       | Manage projects     | `add`, `list`, `update`, `remove`   |
+| `task`      |       | Manage tasks        | `add`, `list`, `update`, `remove`   |
+| `dashboard` | `ui`  | TUI Dashboard       |                                     |
+| `calendar`  | `cal` | Calendar TUI        | `--theme`, `--add`                  |
+| `statusbar` |       | Statusbar output    | `--format`                          |
+| `config`    |       | Manage config       | `edit`, `show`, `set`               |
+| `import`    |       | Import data         | `--zeit`, `--json`                  |
+| `export`    |       | Export data         | `--format`, `--output`              |
 
 ## Configuration Reference
 
@@ -275,6 +278,7 @@ MIT License - see [LICENSE](LICENSE)
 ## Credits
 
 Inspired by:
+
 - [Zeit](https://github.com/mrusme/zeit) - Original time tracker
 - Final Fantasy VII - Theme and aesthetics
 - The Rust community
