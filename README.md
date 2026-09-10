@@ -279,7 +279,7 @@ Contributions welcome! See [CONTRIBUTING.md](docs/CONTRIBUTING.md)
 
 ## License
 
-MIT License - see [LICENSE](LICENSE)
+GPL-3.0-or-later - see [LICENSE](LICENSE)
 
 ## Credits
 
